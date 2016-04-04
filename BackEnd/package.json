@@ -1,15 +1,18 @@
 {
     "name": "BackEndBill",
     "version": "0.1.0",
-    "apidoc": {
-        "title": "Custom apiDoc browser title",
-        "url": "https://api.github.com/v1"
-    },
-    "private": true,
+    "private": false,
     "scripts": {
         "start": "node ./bin/www",
         "install_db": "node ./install_db"
     },
+    "author": "Iván Manso",
+    "license": "ISC",
+    "homepage": "https://github.com/IvanManso/BackEndBill#readme",
+    "repository": {
+    "type": "git",
+    "url": "git+https://IvanManso@github.com/IvanManso/BackEndBill.git"
+     },
     "dependencies": {
         "basic-auth": "^1.0.3",
         "basic-auth-mongoose": "^0.1.1",

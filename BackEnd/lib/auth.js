@@ -29,14 +29,14 @@ var fn = function() {
 
         User.findOne({ "name": userRequest.name }, function(err, rows) {
             console.log("Las rows son", rows);
-            console.log(rows.clave);
-            console.log("La clave encontrada es y la hasheada con la que comparar", rows.clave, claveHash);
+            console.log(rows.password);
+            console.log("La clave encontrada es y la hasheada con la que comparar", rows.password, claveHash);
             if (err || rows.length === 0) {
                 res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
                 return res.sendStatus(401);
             }
             if (rows.length !== 0) {
-                userEnc = rows.clave;
+                userEnc = rows.password;
                 console.log("Las rows no están vacías");
             }
 

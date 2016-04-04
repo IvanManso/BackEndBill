@@ -9,7 +9,7 @@ var dbConnection = {
  * Conectaremos nuestro cliente con mongodb a través de la url en cuestión
  */
 
-client.connect('mongodb://localhost:27017/facturas', function(err, conn) {
+client.connect('mongodb://localhost:27017/factura', function(err, conn) {
     if (err) {
         console.log("Cant connect");
         process.exit(1);

@@ -7,9 +7,33 @@ var passwordHash = require('sha256');
 
 
 /* GET users listing. */
+/*
 router.get('/', function(req, res, next) {
+    var User = mongoose.model("User");
+    User.list({}, null, function(err, rows) {
+         if (err) {
+            return res.json({ result: false, err: err });
+        } else {
+            return res.json({ result: true, rows: rows });
+        }
+    });
+});
+*/
+router.get('/', function(req, res) {
+    var Factura = mongoose.model("Bill");
+    Factura.list({}, null, function(err, rows) {
+        if (err) {
+            return res.json({ result: false, err: err });
+        } else {
+            return res.json({ result: true, rows: rows });
+        }
+    });
+});
+
+/*router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
+*/
 
 /**
  * Aquí validaremos el usuario cuando se le intenta registrar. Para ello comprobamos que ningún campo se encuentre vacío.

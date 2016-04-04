@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require("mongoose");
 var auth = require("../../../lib/auth"); //nos traemos el módulo auth.js para que nos los traiga y usarlo donde quiera
-var Factura = mongoose.model("Factura");
+var Factura = mongoose.model("Bill");
 var User = mongoose.model("User");
 
 
@@ -85,12 +85,7 @@ router.get('/', function(req, res) {
  * Ruta establecida a partir de la cual podremos ver la lista de anuncios
  */
 
-router.get('/form', function(req, res, next) {
-    var Factura = mongoose.model("Bill");
-    Anuncio.list({}, null, function(err, rows) {
-        res.json({ result: true, spots: rows });
-    });
-});
+
 
 
 
