@@ -14,7 +14,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 //API
-var apiFacturas = require("./routes/api/v1/facturas");
+var apiFacturas = require("./routes/api/v1/factura");
 var apiUsers = require("./routes/users");
 
 

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require("mongoose");
 var auth = require("../../../lib/auth"); //nos traemos el módulo auth.js para que nos los traiga y usarlo donde quiera
-var Factura = mongoose.model("Factura");
+var Factura = mongoose.model("Bill");
 var User = mongoose.model("User");
 
 
@@ -85,12 +85,32 @@ router.get('/', function(req, res) {
  * Ruta establecida a partir de la cual podremos ver la lista de anuncios
  */
 
-router.get('/form', function(req, res, next) {
-    var Factura = mongoose.model("Bill");
-    Anuncio.list({}, null, function(err, rows) {
-        res.json({ result: true, spots: rows });
-    });
+router.post("/", function(req, res) {
+    validarFact(req, res);
 });
+
+function validarFact(req, res) {
+    var factura = new Factura(req.body);
+    var owner = req.body.owner;
+    var detail = req.body.detail;
+    var price = req.body.price;
+    var date = req.body.date;
+    var payment_date = req.body.payment_date;
+    var company = req.body.company;
+    var paid = req.body.paid;
+    if (owner === "" || detail === "" || price === "" || company === "" || paid === "") {
+        return console.error("Campos vacíos");
+    } else {
+        factura.save(function(err, saved) {
+            if (err) {
+                return res.json({ result: false, err: err });
+            } else {
+                console.log("Registro completado");
+                return res.json({ result: true, row: saved });
+            }
+        });
+    }
+}
 
 
 

@@ -38,6 +38,7 @@ function cargaFacturasDefect(callback) {
                     });
                 }
             }
+            console.log(defecto);
             console.log("FIN");
         });
     });
@@ -61,21 +62,20 @@ function cargaUsuariosDefect(callback) {
                 var defecto = JSON.parse(data);
                 for (var i = 0; i < defecto.usuarios.length; i++) {
                     var user = new User(defecto.usuarios[i]);
-                    console.log(user["name"]);
-                    console.log(user["password"]);
+                    //console.log(user["name"]);
+                    //console.log(user["password"]);
                     user.password = passwordHash(user["password"]);
-                    console.log(user["pasword"]);
+                    //console.log(user["pasword"]);
                     user.save(function(err, saved) {
                         if (err) {
                             console.log("Ha ocurrido un error con el usuario", err);
                             return;
                         }
-
+                        console.log(defecto);
                         console.log("Usuario guardado con éxito");
                     });
                 }
             }
-            console.log(defecto);
             console.log("FIN");
         });
     });
