@@ -1,0 +1,36 @@
+{
+    "facturas": [{
+        "owner": "Ivan",
+        "detail": "",
+        "price": 230,
+        "date": "1/09/2015",
+        "payment_date": "12/09/2015",
+        "company": "Endesa",
+        "paid": true
+
+    }, {
+        "owner": "Iván",
+        "detail": "",
+        "price": 700,
+        "date": "16/05/2015",
+        "payment_date": "",
+        "company": "Iberdrola",
+        "paid": false
+    }, {
+        "owner": "Raul",
+        "detail": "",
+        "price": 120,
+        "date":"16/12/2015",
+        "payment_date": "",
+        "company": "Iberogas",
+        "paid": false
+    }, {
+        "owner": "Raul",
+        "detail": "",
+        "price": 160,
+        "date":"15/01/2016",
+        "payment_date": "18/01/2016",
+        "company": "Seguros Mapfre",
+        "paid": true
+    }]
+}
