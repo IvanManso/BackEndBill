@@ -20,8 +20,8 @@ router.get('/', function(req, res, next) {
 });
 */
 router.get('/', function(req, res) {
-    var Factura = mongoose.model("Bill");
-    Factura.list({}, null, function(err, rows) {
+    var sort = req.query.sort;
+    User.list(sort, function(err, rows) {
         if (err) {
             return res.json({ result: false, err: err });
         } else {
