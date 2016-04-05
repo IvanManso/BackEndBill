@@ -47,6 +47,7 @@ facturaSchema.statics.list = function(filter, sort, limit, start, cb) {
             return;
         }
         cb(null, rows);
+        console.log("Las rows son", rows);
         return;
     });
 };

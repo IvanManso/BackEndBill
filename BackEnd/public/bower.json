@@ -1,0 +1,26 @@
+{
+  "name": "FrontEndBill",
+  "description": "Angular app which connect with BackEndBill",
+  "main": "index.js",
+  "authors": [
+    "Iván Manso"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/IvanManso/FrontEndBill",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.3",
+    "bootstrap": "^3.3.6",
+    "angular-route": "^1.5.3",
+    "moment": "^2.12.0",
+    "angular-sanitize": "^1.5.3"
+  }
+}

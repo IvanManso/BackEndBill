@@ -1,0 +1,34 @@
+<div class="login-box" ng-controller="LoginController">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading center-block">
+                        <strong> Log in to continue</strong>
+                    </div>
+                    <div class="panel-body">
+                        <form name="myForm" ng-submit="saveUsername()">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+													<i class="glyphicon glyphicon-user"></i>
+												</span>
+                                                <input class="form-control" placeholder="Username" type="text" ng-model="model.username" for="username" autofocus>
+                                            </div>
+                                        </div>
+                                        <div class="center">
+                                            <button type="submit" class="btn btn-primary btn-md">login<i class="fa fa-sign-in"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

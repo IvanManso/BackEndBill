@@ -1,0 +1,29 @@
+<nav class="navbar navbar-default" ng-controller="MenuController">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#{{::paths.url.home}}">{{::paths.titles.home}}</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li ng-class="getClassForItem(paths.url.movies)">
+                    <a href="#{{::paths.url.movies}}">{{::paths.titles.bills}}</a>
+                </li>
+                <li ng-class="getClassForItem(paths.url.movieNew)">
+                    <a href="#{{::paths.url.movieNew}}">{{::paths.titles.billNew}}</a>
+                </li>
+            </ul>
+            <a href="#{{::paths.url.home}}" class="logout btn btn-default glyphicon glyphicon-log-out" ng-click="clearUsername()">
+                Logout
+            </a>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>

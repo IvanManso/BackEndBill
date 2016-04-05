@@ -5,9 +5,9 @@ var auth = require("../../../lib/auth"); //nos traemos el módulo auth.js para q
 var Factura = mongoose.model("Bill");
 var User = mongoose.model("User");
 
-
+//res.json({ result: true, rows: rows });
 //Lanzamos la autentificación
-router.use(auth());
+//router.use(auth());
 
 /**
  * Aquí realizamos la petición de anuncios a través de filtros, para ello obtenelos los parámetros de la query de nuestra request y para el filtro de precio utilizaremos patrones y la el método "split()" que nos dividirá un string a partir del carácter que le digamos en un array.
@@ -38,6 +38,7 @@ router.get('/', function(req, res) {
     var limit = req.query.limit || "";
     var start = req.query.start || "";
     var filter = {};
+    console.log("Aquí el filter al inicio", filter);
     var priceSplit = price.split("-");
     patternMenor = /-\d/;
     patternMayor = /\d-/;
@@ -71,10 +72,12 @@ router.get('/', function(req, res) {
     }
 
 
-    Factura.list(filter, sort, limit, start, function(err, rows) {
+    Factura.list(filter.data, sort, limit, start, function(err, rows) {
         if (err) {
+            console.log("Correcto en factura list");
             return res.json({ result: false, err: err });
         } else {
+            console.log("Error en factura list");
             return res.json({ result: true, rows: rows });
         }
     });

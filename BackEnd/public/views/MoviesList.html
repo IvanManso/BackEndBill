@@ -1,0 +1,17 @@
+<div ng-controller="MoviesListController">
+
+	<h1>Bills</h1>
+
+	<div class="jumbotron" ng-show="uiState=='blank'">
+		<p class="lead">No data here</p>
+	</div>
+
+	<div class="alert alert-danger" ng-show="uiState=='error'">
+		Error while loading data
+	</div>
+
+	<div ng-include="'views/ProgressBar.html'" ng-show="uiState=='loading'"></div>
+
+	<media-item-list items="model" user="user" get-detail-url="getMovieDetailURL(stuff)" save-renter="saveRenter(stuff)" ng-show="uiState=='ideal'"></media-item-list>
+
+</div>
