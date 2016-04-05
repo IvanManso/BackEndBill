@@ -1,7 +1,7 @@
 angular.module('URL', []).service('URL', ['$log', function($log){
-	
-	this.resolve = function(url, params) {
 
+	this.resolve = function(url, params) {
+		console.log("Los params son", params);
 		var finalURL = [];
 		var urlParts = url.split('/');
 		for (var i in urlParts) {
@@ -10,7 +10,7 @@ angular.module('URL', []).service('URL', ['$log', function($log){
 				var paramName = urlPart.substr(1);
 				var paramValue = params[paramName] || null;
 				if (paramValue === null) {
-					$log.error('URL.resolve error:', paramName, 
+					$log.error('URL.resolve error:', paramName,
 					'not found in params dict. ',
 					'Check your params value my friendo.');
 					return;

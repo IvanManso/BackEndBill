@@ -36238,7 +36238,8 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 		$log.log('Inicializo scope.user en MDC:', $scope.user);
 		// Controller init
 		$scope.$emit('ChangeTitle', 'Loading...');
-		APIClient.getMovie($routeParams.id).then(
+		APIClient.getMovie($routeParams.id) //Aquí hay que hacer la petición a Node
+			.then(
 			// Movie found
 			function(movie) {
 				$scope.model = movie;
@@ -36298,56 +36299,76 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
     }]
 );
 
-;angular.module('babelrenting').controller('MoviesListController',
-	['$scope', '$log', '$filter', 'APIClient', 'URL', 'paths',
-    function($scope, $log, $filter, APIClient, URL, paths){
+;angular.module('babelrenting').controller('MoviesListController', ['$scope', '$log', '$filter', 'APIClient', 'URL', 'paths',
+        function($scope, $log, $filter, APIClient, URL, paths) {
 
-		// Scope model init
-		$scope.model = [];
-        $scope.uiState = 'loading';
-        $scope.url = URL.resolve;
-        $scope.user = APIClient.takeUser();
+            // Scope model init
+            $scope.model = [];
+            $scope.uiState = 'loading';
+            $scope.url = URL.resolve;
+            $scope.user = APIClient.takeUser();
 
-        // User init
+            // User init
 
-        $scope.clearUsername = function(){
-            APIClient.clearUser();
-        };
+            $scope.clearUsername = function() {
+                APIClient.clearUser();
+            };
 
-        // Scope methods
-        $scope.getMovieDetailURL = function(movie) {
-            return URL.resolve(paths.url.movieDetail, { id: movie.id });
-        };
+            // Scope methods
+            $scope.getMovieDetailURL = function(movie) {
+                console.log("Los datos de movie para ver el id son", movie);
+                return URL.resolve(paths.url.movieDetail, { id: movie.id });
+            };
 
-        //AQUÍ
-        $scope.saveRenter = function(movie) {
-            movie.renter = $scope.user;
-            movie.rent_date = $filter('date')(new Date(), 'yyyy-MM-dd');
-            APIClient.rentMovie(movie);
-        };
+            //AQUÍ
+            $scope.saveRenter = function(movie) {
+                movie.payment_date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                APIClient.rentMovie(movie);
+            };
 
-        // Controller start
-        APIClient.getMovies().then(
-        	//resolved promise
-        	function(data) {
-                console.log("Los datos son", data);
-                var movies = data;
-                if (movies.length === 0) {
-                    $scope.uiState = 'blank';
-                } else {
-                    $scope.model = movies.data.rows;
-                    $scope.uiState = 'ideal';
-        		}
-        	},
-        	//rejected promise
-        	function() {
-        		$scope.uiState = 'error';
-        	}
-    	);
+            // Controller start
+            APIClient.getMovies().then(
+                //resolved promise
+                function(data) {
+                    console.log("Los datos son", data);
+                    var movies = data;
+                    if (movies.length === 0) {
+                        $scope.uiState = 'blank';
+                    } else {
+                        $scope.model = movies.data.rows;
+                        $scope.uiState = 'ideal';
+                    }
+                },
+                //rejected promise
+                function() {
+                    $scope.uiState = 'error';
+                }
+            );
 
-	}]
+            $scope.getDetail = function(id) { //con esto falla
+                APIClient.getMovie(id).then(
+                    function(data) {
+                        console.log("Los datos son", data);
+                        var movies = data;
+                        if (movies.length === 0) {
+                            $scope.uiState = 'blank';
+                        } else {
+                            $scope.model = movies.data.rows;
+                            $scope.uiState = 'ideal';
+                        }
+                    },
+                    //rejected promise
+                function() {
+                    $scope.uiState = 'error';
+                }
+                );
+            };
+
+        }
+    ]
 
 );
+
 ;angular.module('babelrenting').directive('mediaItem', function() {
 	return {
 		restrict: 'AE',
@@ -36432,10 +36453,11 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
             return $http.get('/api/v1/factura');
         };
 
-        this.getMovie = function(movieId) {
-
+        this.getMovie = function(movieId) { //modificar para que devuelva la película pedida
             var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
-            return this.apiRequest(url);
+            console.log("El id de la movie es", id);
+            return $http.get('/api/v1/factura/:id');
+            //return this.apiRequest(url);
 
         };
 
@@ -36473,6 +36495,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
             // deferred object creation
             var deferred = $q.defer(movie);
             var url = URL.resolve(apiPaths.movieDetail, { id: movie.id });
+            console.log("Los datos de movie para ver el id son", movie);
 
             // async work
             $http.put(url, movie)
@@ -36498,9 +36521,9 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 ]);
 
 ;angular.module('URL', []).service('URL', ['$log', function($log){
-	
-	this.resolve = function(url, params) {
 
+	this.resolve = function(url, params) {
+		console.log("Los params son", params);
 		var finalURL = [];
 		var urlParts = url.split('/');
 		for (var i in urlParts) {
@@ -36509,7 +36532,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 				var paramName = urlPart.substr(1);
 				var paramValue = params[paramName] || null;
 				if (paramValue === null) {
-					$log.error('URL.resolve error:', paramName, 
+					$log.error('URL.resolve error:', paramName,
 					'not found in params dict. ',
 					'Check your params value my friendo.');
 					return;
@@ -36524,8 +36547,8 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
 }]);
 ;angular.module("babelrenting").value("apiPaths", {
-	movies: "api/bills",
-	movieDetail: "api/bills/:id",
+	movies: "api/movies",
+	movieDetail: "api/movies/:id",
 });
 ;angular.module("babelrenting").constant("paths", {
 

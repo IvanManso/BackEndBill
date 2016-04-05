@@ -21,9 +21,8 @@
                 {{::item.price}}
             </td>
             <td>
-                <a href="#{{::getDetailUrl({ stuff: item })}}" class="btn btn-default">Detail</a>
-                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter({ stuff: item })" class="btn btn-default" ng-show="item.paid == false">Pay</a>
-                <a href="#{{::getDetailUrl({ stuff: item })}}" class="btn btn-default" ng-show="item.renter != null && item.renter == user">Unrent</a>
+                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="getDetail(item.id)"class="btn btn-default">Detail</a>
+                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter({ stuff: item })" class="btn btn-default" ng-disabled="item.paid == true">Pay</a>
             </td>
         </tr>
     </tbody>

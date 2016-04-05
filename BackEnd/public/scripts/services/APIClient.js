@@ -57,10 +57,11 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
             return $http.get('/api/v1/factura');
         };
 
-        this.getMovie = function(movieId) {
-
+        this.getMovie = function(movieId) { //modificar para que devuelva la película pedida
             var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
-            return this.apiRequest(url);
+            console.log("El id de la movie es", id);
+            return $http.get('/api/v1/factura/:id');
+            //return this.apiRequest(url);
 
         };
 
@@ -98,6 +99,7 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
             // deferred object creation
             var deferred = $q.defer(movie);
             var url = URL.resolve(apiPaths.movieDetail, { id: movie.id });
+            console.log("Los datos de movie para ver el id son", movie);
 
             // async work
             $http.put(url, movie)
