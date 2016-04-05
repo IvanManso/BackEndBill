@@ -38,7 +38,6 @@ router.get('/', function(req, res) {
     var limit = req.query.limit || "";
     var start = req.query.start || "";
     var filter = {};
-    console.log("Aquí el filter al inicio", filter);
     var priceSplit = price.split("-");
     patternMenor = /-\d/;
     patternMayor = /\d-/;
@@ -89,19 +88,20 @@ router.get('/', function(req, res) {
  */
 
 router.post("/", function(req, res) {
-    validarFact(req, res);
-});
+    //validarFact(req, res);
+//});
 
-function validarFact(req, res) {
+//function validarFact(req, res) {
+    console.log("Estoy en validarFact dentro del post en factura.js");
     var factura = new Factura(req.body);
-    var owner = req.body.owner;
+    //var owner = req.body.owner;
     var detail = req.body.detail;
     var price = req.body.price;
-    var date = req.body.date;
-    var payment_date = req.body.payment_date;
+    //var date = req.body.date;
+    //var payment_date = req.body.payment_date;
     var company = req.body.company;
     var paid = req.body.paid;
-    if (owner === "" || detail === "" || price === "" || company === "" || paid === "") {
+    if (detail === "" || price === "" || company === "" || paid === "") {
         return console.error("Campos vacíos");
     } else {
         factura.save(function(err, saved) {
@@ -113,8 +113,8 @@ function validarFact(req, res) {
             }
         });
     }
-}
-
+});
+//}
 
 
 module.exports = router;

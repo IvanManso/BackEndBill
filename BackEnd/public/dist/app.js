@@ -36175,8 +36175,8 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
 }]);
 
-;angular.module('babelrenting').controller('LoginController', 
-    ["APIClient", "$scope", "$window", 
+;angular.module('babelrenting').controller('LoginController',
+    ["APIClient", "$scope", "$window",
     function(APIClient, $scope, $window) {
 
         $scope.model = {};
@@ -36189,7 +36189,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
             $scope.successMessage = "Username saved! ";
             $window.location.href = "#/movies";
         };
-        
+
     }]
 );
 
@@ -36260,8 +36260,8 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 	}]
 );
 
-;angular.module("babelrenting").controller("MovieFormController", 
-    ["$scope", "$log", "APIClient","$filter", "$window", 
+;angular.module("babelrenting").controller("MovieFormController",
+    ["$scope", "$log", "APIClient","$filter", "$window",
     function($scope, $log, APIClient, $filter, $window) {
 
         $log.log("Estoy en el controlador");
@@ -36275,13 +36275,15 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
         //Scope methods
         $scope.saveMovie = function() {
             $scope.model.owner = $scope.user;
-            $scope.model.upload_date = $filter('date')(new Date(), 'yyyy-MM-dd');
-            $log.log("El movie.owner y el día y demás", $scope.model.owner, $scope.model.upload_date);
+            $scope.model.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+            $scope.model.paid = "false";
+            $scope.model.payment_date = "";
+            $log.log("El movie.owner y el día y demás", $scope.model.owner, $scope.model.date);
             APIClient.createMovie($scope.model)
                 .then(
                     function(movie) {
-                        $log.log("Soy el console.log de la promesa");
-                        $scope.successMessage = "Movie saved!";
+                        $log.log("Soy el console.log de la promesa de saveMovie que llama a createMovie del servicio");
+                        $scope.successMessage = "Bill saved!";
                         $log.log($scope.model);
                         $scope.model = {};
                         $scope.movieForm.$setPristine();
@@ -36437,31 +36439,35 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
         };
 
-
         this.createMovie = function(movie) {
-            // deferred object creation
-            var deferred = $q.defer();
+            console.log("Estoy en createMovies");
+            return $http.post('/api/v1/factura', movie);
+        }
+
+        /* this.createMovie = function(movie) {
+             // deferred object creation
+             var deferred = $q.defer();
 
 
-            // async work
-            $http.post(apiPaths.movies, movie)
-                .then(
-                    // ok request
-                    function(response) {
-                        // promise resolve
-                        deferred.resolve(response.data);
-                    },
-                    // KO request
-                    function(response) {
-                        // promise reject
-                        deferred.reject(response.data);
-                    }
-                );
+             // async work
+             $http.post(apiPaths.movies, movie)
+                 .then(
+                     // ok request
+                     function(response) {
+                         // promise resolve
+                         deferred.resolve(response.data);
+                     },
+                     // KO request
+                     function(response) {
+                         // promise reject
+                         deferred.reject(response.data);
+                     }
+                 );
 
-            // return promise
-            return deferred.promise;
+             // return promise
+             return deferred.promise;
 
-        };
+         }; */
 
         this.rentMovie = function(movie) {
             // deferred object creation
@@ -36518,8 +36524,8 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
 }]);
 ;angular.module("babelrenting").value("apiPaths", {
-	movies: "api/movies",
-	movieDetail: "api/movies/:id",
+	movies: "api/bills",
+	movieDetail: "api/bills/:id",
 });
 ;angular.module("babelrenting").constant("paths", {
 

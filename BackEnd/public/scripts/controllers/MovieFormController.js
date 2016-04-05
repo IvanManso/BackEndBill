@@ -1,5 +1,5 @@
-angular.module("babelrenting").controller("MovieFormController", 
-    ["$scope", "$log", "APIClient","$filter", "$window", 
+angular.module("babelrenting").controller("MovieFormController",
+    ["$scope", "$log", "APIClient","$filter", "$window",
     function($scope, $log, APIClient, $filter, $window) {
 
         $log.log("Estoy en el controlador");
@@ -13,13 +13,15 @@ angular.module("babelrenting").controller("MovieFormController",
         //Scope methods
         $scope.saveMovie = function() {
             $scope.model.owner = $scope.user;
-            $scope.model.upload_date = $filter('date')(new Date(), 'yyyy-MM-dd');
-            $log.log("El movie.owner y el día y demás", $scope.model.owner, $scope.model.upload_date);
+            $scope.model.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+            $scope.model.paid = "false";
+            $scope.model.payment_date = "";
+            $log.log("El movie.owner y el día y demás", $scope.model.owner, $scope.model.date);
             APIClient.createMovie($scope.model)
                 .then(
                     function(movie) {
-                        $log.log("Soy el console.log de la promesa");
-                        $scope.successMessage = "Movie saved!";
+                        $log.log("Soy el console.log de la promesa de saveMovie que llama a createMovie del servicio");
+                        $scope.successMessage = "Bill saved!";
                         $log.log($scope.model);
                         $scope.model = {};
                         $scope.movieForm.$setPristine();

@@ -1,5 +1,5 @@
-angular.module('babelrenting').controller('LoginController', 
-    ["APIClient", "$scope", "$window", 
+angular.module('babelrenting').controller('LoginController',
+    ["APIClient", "$scope", "$window",
     function(APIClient, $scope, $window) {
 
         $scope.model = {};
@@ -12,6 +12,6 @@ angular.module('babelrenting').controller('LoginController',
             $scope.successMessage = "Username saved! ";
             $window.location.href = "#/movies";
         };
-        
+
     }]
 );

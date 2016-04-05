@@ -64,31 +64,35 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
 
         };
 
-
         this.createMovie = function(movie) {
-            // deferred object creation
-            var deferred = $q.defer();
+            console.log("Estoy en createMovies");
+            return $http.post('/api/v1/factura', movie);
+        }
+
+        /* this.createMovie = function(movie) {
+             // deferred object creation
+             var deferred = $q.defer();
 
 
-            // async work
-            $http.post(apiPaths.movies, movie)
-                .then(
-                    // ok request
-                    function(response) {
-                        // promise resolve
-                        deferred.resolve(response.data);
-                    },
-                    // KO request
-                    function(response) {
-                        // promise reject
-                        deferred.reject(response.data);
-                    }
-                );
+             // async work
+             $http.post(apiPaths.movies, movie)
+                 .then(
+                     // ok request
+                     function(response) {
+                         // promise resolve
+                         deferred.resolve(response.data);
+                     },
+                     // KO request
+                     function(response) {
+                         // promise reject
+                         deferred.reject(response.data);
+                     }
+                 );
 
-            // return promise
-            return deferred.promise;
+             // return promise
+             return deferred.promise;
 
-        };
+         }; */
 
         this.rentMovie = function(movie) {
             // deferred object creation

@@ -1,8 +1,8 @@
 <table class="table table-striped" table ng-controller="MoviesListController">
     <thead>
         <tr>
-            <th>Company</th>
             <th>Owner</th>
+            <th>Company</th>
             <th>Price</th>
             <th>
                 <input type="search" ng-model="query.title" placeholder="Search..." class="form-control">
@@ -22,7 +22,7 @@
             </td>
             <td>
                 <a href="#{{::getDetailUrl({ stuff: item })}}" class="btn btn-default">Detail</a>
-                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter({ stuff: item })" class="btn btn-default" ng-show="item.renter == null">Rent</a>
+                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter({ stuff: item })" class="btn btn-default" ng-show="item.paid == false">Pay</a>
                 <a href="#{{::getDetailUrl({ stuff: item })}}" class="btn btn-default" ng-show="item.renter != null && item.renter == user">Unrent</a>
             </td>
         </tr>
