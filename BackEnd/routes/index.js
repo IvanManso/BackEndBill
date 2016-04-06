@@ -36,14 +36,10 @@ router.post("/", function(req, res) {
                     } else if (rows.length === 0) {
                         return console.error("La contraseña para el dicho usuario no existe");
                     } else {
-                        user.save(function(err, saved) {
-                            if (err) {
-                                return res.json({ result: false, err: err });
-                            } else {
+
                                 console.log("Login completado");
-                                return res.json({ result: true, row: saved });
-                            }
-                        });
+                                return res.json({ result: true, row: "" });
+
                     };
                 });
             };
