@@ -14,6 +14,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 //API
+//var apiFactura = require("./routes/api/v1/factura/:id");
 var apiFacturas = require("./routes/api/v1/factura");
 var apiUsers = require("./routes/users");
 var apiIndex = require("./routes/index");
@@ -40,6 +41,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 //Rutas de API V1
+//app.use("/api/v1/factura/:id", apiFacturas);
 app.use("/api/v1/factura", apiFacturas);
 app.use("/routes/users", apiUsers);
 app.use("/routes/index", apiIndex);

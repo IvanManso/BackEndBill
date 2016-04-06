@@ -36329,6 +36329,24 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
             $scope.user = APIClient.takeUser();
 
             // User init
+            $scope.getDetail = function(id) {
+                APIClient.getMovie(id).then(
+                    function(data) {
+                        console.log("Los datos son", data);
+                        var movies = data;
+                        if (movies.length === 0) {
+                            $scope.uiState = 'blank';
+                        } else {
+                            $scope.model = movies.data.rows;
+                            $scope.uiState = 'ideal';
+                        }
+                    },
+                    //rejected promise
+                function() {
+                    $scope.uiState = 'error';
+                }
+                );
+            };
 
             $scope.clearUsername = function() {
                 APIClient.clearUser();
@@ -36337,7 +36355,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
             // Scope methods
             $scope.getMovieDetailURL = function(movie) {
                 console.log("Los datos de movie para ver el id son", movie);
-                return URL.resolve(paths.url.movieDetail, { id: movie.id });
+                return URL.resolve(paths.url.movieDetail, { id: movie._id });
             };
 
             //AQUÍ
@@ -36365,24 +36383,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                 }
             );
 
-            $scope.getDetail = function(id) { //con esto falla
-                APIClient.getMovie(id).then(
-                    function(data) {
-                        console.log("Los datos son", data);
-                        var movies = data;
-                        if (movies.length === 0) {
-                            $scope.uiState = 'blank';
-                        } else {
-                            $scope.model = movies.data.rows;
-                            $scope.uiState = 'ideal';
-                        }
-                    },
-                    //rejected promise
-                function() {
-                    $scope.uiState = 'error';
-                }
-                );
-            };
+
 
         }
     ]
@@ -36541,19 +36542,19 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
             //return this.apiRequest(apiPaths.movies);
 
         }; */
+        this.getMovie = function(movieId) { //modificar para que devuelva la película pedida
+            console.log("El movieId es", movieId);
+            var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
+            console.log("El id de la facturas es", movieId);
+            console.log("Soy el getMovie, después de esta acción debería hacer la petición ajax de get con el id que tengo", movieId);
+            return $http.get('/api/v1/factura/' + movieId);
+            //return this.apiRequest(url);
+
+        };
 
         this.getMovies = function() {
             console.log("Estoy en getMovies");
             return $http.get('/api/v1/factura');
-        };
-
-        this.getMovie = function(movieId) { //modificar para que devuelva la película pedida
-            console.log("El movieId es", movieId);
-            var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
-            console.log("El id de la movie es", id);
-            return $http.get('/api/v1/factura/:id');
-            //return this.apiRequest(url);
-
         };
 
         this.createMovie = function(movie) {
@@ -36615,33 +36616,38 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
     }
 ]);
 
-;angular.module('URL', []).service('URL', ['$log', function($log){
+;angular.module('URL', []).service('URL', ['$log', function($log) {
 
-	this.resolve = function(url, params) {
-		console.log("Estoy en el service de la URL la url:", url);
-		console.log("Los params son", params);
-		var finalURL = [];
-		var urlParts = url.split('/');
-		for (var i in urlParts) {
-			var urlPart = urlParts[i];
-			if (urlPart.substr(0, 1) === ':') {
-				var paramName = urlPart.substr(1);
-				var paramValue = params[paramName] || null;
-				if (paramValue === null) {
-					$log.error('URL.resolve error:', paramName,
-					'not found in params dict. ',
-					'Check your params value my friendo.');
-					return;
-				}
-				finalURL.push(paramValue);
-			} else {
-				finalURL.push(urlPart);
-			}
-		}
-		return finalURL.join('/');
-	};
+    this.resolve = function(url, params) {
+        console.log("Estoy en el service de la URL la url:", url);
+        console.log("Los params son", params);
+        var finalURL = [];
+        var urlParts = url.split('/');
+        for (var i in urlParts) {
+            var urlPart = urlParts[i];
+            if (urlPart.substr(0, 1) === ':') {
+                var paramName = urlPart.substr(1);
+                var paramValue = params[paramName] || null;
+                if (paramValue === null) {
+                    $log.error('URL.resolve error:', paramName,
+                        'not found in params dict. ',
+                        'Check your params value my friendo.');
+                    return;
+                }
+                finalURL.push(paramValue);
+            } else {
+                console.log("El paramValue1 es", paramValue);
+                console.log("Salgo de url1");
+                finalURL.push(urlPart);
+            }
+        }
+        console.log("El paramValue2 es", paramValue);
+        console.log("Salgo de url2");
+        return finalURL.join('/');
+    };
 
 }]);
+
 ;angular.module("babelrenting").value("apiPaths", {
 	movies: "api/movies",
 	movieDetail: "api/movies/:id",

@@ -92,19 +92,19 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
             //return this.apiRequest(apiPaths.movies);
 
         }; */
+        this.getMovie = function(movieId) { //modificar para que devuelva la película pedida
+            console.log("El movieId es", movieId);
+            var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
+            console.log("El id de la facturas es", movieId);
+            console.log("Soy el getMovie, después de esta acción debería hacer la petición ajax de get con el id que tengo", movieId);
+            return $http.get('/api/v1/factura/' + movieId);
+            //return this.apiRequest(url);
+
+        };
 
         this.getMovies = function() {
             console.log("Estoy en getMovies");
             return $http.get('/api/v1/factura');
-        };
-
-        this.getMovie = function(movieId) { //modificar para que devuelva la película pedida
-            console.log("El movieId es", movieId);
-            var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
-            console.log("El id de la movie es", id);
-            return $http.get('/api/v1/factura/:id');
-            //return this.apiRequest(url);
-
         };
 
         this.createMovie = function(movie) {

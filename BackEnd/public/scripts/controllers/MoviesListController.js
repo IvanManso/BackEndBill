@@ -8,6 +8,24 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
             $scope.user = APIClient.takeUser();
 
             // User init
+            $scope.getDetail = function(id) {
+                APIClient.getMovie(id).then(
+                    function(data) {
+                        console.log("Los datos son", data);
+                        var movies = data;
+                        if (movies.length === 0) {
+                            $scope.uiState = 'blank';
+                        } else {
+                            $scope.model = movies.data.rows;
+                            $scope.uiState = 'ideal';
+                        }
+                    },
+                    //rejected promise
+                function() {
+                    $scope.uiState = 'error';
+                }
+                );
+            };
 
             $scope.clearUsername = function() {
                 APIClient.clearUser();
@@ -16,7 +34,7 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
             // Scope methods
             $scope.getMovieDetailURL = function(movie) {
                 console.log("Los datos de movie para ver el id son", movie);
-                return URL.resolve(paths.url.movieDetail, { id: movie.id });
+                return URL.resolve(paths.url.movieDetail, { id: movie._id });
             };
 
             //AQUÍ
@@ -44,24 +62,7 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
                 }
             );
 
-            $scope.getDetail = function(id) { //con esto falla
-                APIClient.getMovie(id).then(
-                    function(data) {
-                        console.log("Los datos son", data);
-                        var movies = data;
-                        if (movies.length === 0) {
-                            $scope.uiState = 'blank';
-                        } else {
-                            $scope.model = movies.data.rows;
-                            $scope.uiState = 'ideal';
-                        }
-                    },
-                    //rejected promise
-                function() {
-                    $scope.uiState = 'error';
-                }
-                );
-            };
+
 
         }
     ]
