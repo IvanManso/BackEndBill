@@ -54,10 +54,6 @@ Tras esto comprobamos si el nombre ya se encuentra en nuestra DB y si este no se
  */
 
 router.post("/", function(req, res) {
-   /* validar(req, res);
-});
-
-function validar(req, res) {*/
     var user = new User(req.body);
     var name = req.body.name;
     var amount = req.body.amount;

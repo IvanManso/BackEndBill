@@ -1,5 +1,4 @@
-angular.module("babelrenting").controller("UserFormController",
-    ["$scope", "$log", "APIClient","$filter", "$window",
+angular.module("babelrenting").controller("UserFormController", ["$scope", "$log", "APIClient", "$filter", "$window",
     function($scope, $log, APIClient, $filter, $window) {
 
         $log.log("Estoy en el controlador");
@@ -22,10 +21,12 @@ angular.module("babelrenting").controller("UserFormController",
                         $window.location.href = "#/";
                     },
                     function(error) {
+                        //$scope.movieForm.$setPristine();
+                        //$window.location.href = "#/userNew";
                         $scope.errorMessage = "Fatal error. Then end is near.";
                     }
                 )
         }
 
-    }]
-);
+    }
+]);

@@ -36157,8 +36157,10 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
     // Controller properties
     controller.titles = {};
     controller.titles[paths.url.home] = paths.titles.home;
-    controller.titles[paths.url.movies] = paths.titles.movies;
-    controller.titles[paths.url.movieNew] = paths.titles.movieNew;
+    controller.titles[paths.url.movies] = paths.titles.bills;
+    controller.titles[paths.url.movieNew] = paths.titles.billNew;
+    controller.titles[paths.url.newUser] = paths.titles.newUser;
+
 
     //Scope init
     $scope.model = {
@@ -36178,18 +36180,29 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
 }]);
 
-;angular.module('babelrenting').controller('LoginController', ["APIClient", "$scope", "$window",
-    function(APIClient, $scope, $window) {
+;angular.module('babelrenting').controller('LoginController', ["APIClient", "$scope", "$location", "$window", "paths",
+    function(APIClient, $scope, $location, $window, paths) {
 
         $scope.model = {};
         $scope.successMessage = null;
         $scope.errorMessage = null;
 
         $scope.saveUsername = function() {
-            APIClient.saveUser($scope.model)
-            console.log("Guardado con éxito desde LoginController");
-            $scope.successMessage = "Username saved! ";
-            $window.location.href = "#/movies";
+            APIClient.testLogin($scope.model)
+                .then(
+                    // Movie found
+                    function(movie) {
+                        APIClient.saveUser($scope.model);
+                        console.log("Guardado con éxito desde LoginController");
+                        $scope.successMessage = "Username saved! ";
+                        $window.location.href = "#/movies";
+                    },
+                    // Movie not found
+                    function(error) {
+                        // TODO: improve error management
+                        $location.url(paths.notFound);
+                    }
+                );
         };
 
         $scope.redir = function() {
@@ -36375,8 +36388,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
 );
 
-;angular.module("babelrenting").controller("UserFormController",
-    ["$scope", "$log", "APIClient","$filter", "$window",
+;angular.module("babelrenting").controller("UserFormController", ["$scope", "$log", "APIClient", "$filter", "$window",
     function($scope, $log, APIClient, $filter, $window) {
 
         $log.log("Estoy en el controlador");
@@ -36399,13 +36411,15 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                         $window.location.href = "#/";
                     },
                     function(error) {
+                        //$scope.movieForm.$setPristine();
+                        //$window.location.href = "#/userNew";
                         $scope.errorMessage = "Fatal error. Then end is near.";
                     }
                 )
         }
 
-    }]
-);
+    }
+]);
 
 ;angular.module('babelrenting').directive('mediaItem', function() {
 	return {
@@ -36435,10 +36449,44 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 ;angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '$filter', '$log', 'apiPaths', 'URL',
     function($window, $http, $q, $filter, $log, apiPaths, URL) {
 
-        // User logic
-        this.createUser = function(user){
+
+        this.testLogin = function(user) {
+                var deferred = $q.defer();
+                console.log("Estoy en el testLogin del servicio");
+                $http.post('/routes/index', user)
+                    .then(
+                        // ok request
+                        function(response) {
+                            // promise resolve
+                            deferred.resolve(response.data);
+                        },
+                        // KO request
+                        function(response) {
+                            // promise reject
+                            deferred.reject(response.data);
+                        }
+                    );
+                return deferred.promise;
+            }
+            // User logic
+        this.createUser = function(user) {
+            var deferred = $q.defer();
             console.log("Estoy en createUser");
-            return $http.post('/routes/users', user);
+            $http.post('/routes/users', user)
+                .then(
+                    // ok request
+                    function(response) {
+                        // promise resolve
+                        deferred.resolve(response.data);
+                    },
+                    // KO request
+                    function(response) {
+                        // promise reject
+                        deferred.reject(response.data);
+                    }
+                );
+            return deferred.promise;
+
         }
 
         this.saveUser = function(user) {
@@ -36611,7 +36659,8 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 	    bills: "Bills",
 	    billNew: "Save Bill",
 	    movieDetail: "Info",
-	    notFound: "Sorry not found"
+	    notFound: "Sorry not found",
+	    newUser: "Create User"
     }
 });
 

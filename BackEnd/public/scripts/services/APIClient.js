@@ -1,10 +1,44 @@
 angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '$filter', '$log', 'apiPaths', 'URL',
     function($window, $http, $q, $filter, $log, apiPaths, URL) {
 
-        // User logic
-        this.createUser = function(user){
+
+        this.testLogin = function(user) {
+                var deferred = $q.defer();
+                console.log("Estoy en el testLogin del servicio");
+                $http.post('/routes/index', user)
+                    .then(
+                        // ok request
+                        function(response) {
+                            // promise resolve
+                            deferred.resolve(response.data);
+                        },
+                        // KO request
+                        function(response) {
+                            // promise reject
+                            deferred.reject(response.data);
+                        }
+                    );
+                return deferred.promise;
+            }
+            // User logic
+        this.createUser = function(user) {
+            var deferred = $q.defer();
             console.log("Estoy en createUser");
-            return $http.post('/routes/users', user);
+            $http.post('/routes/users', user)
+                .then(
+                    // ok request
+                    function(response) {
+                        // promise resolve
+                        deferred.resolve(response.data);
+                    },
+                    // KO request
+                    function(response) {
+                        // promise reject
+                        deferred.reject(response.data);
+                    }
+                );
+            return deferred.promise;
+
         }
 
         this.saveUser = function(user) {

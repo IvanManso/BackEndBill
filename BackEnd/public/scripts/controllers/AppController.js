@@ -4,8 +4,10 @@ angular.module('babelrenting').controller('AppController', ['$scope', '$location
     // Controller properties
     controller.titles = {};
     controller.titles[paths.url.home] = paths.titles.home;
-    controller.titles[paths.url.movies] = paths.titles.movies;
-    controller.titles[paths.url.movieNew] = paths.titles.movieNew;
+    controller.titles[paths.url.movies] = paths.titles.bills;
+    controller.titles[paths.url.movieNew] = paths.titles.billNew;
+    controller.titles[paths.url.newUser] = paths.titles.newUser;
+
 
     //Scope init
     $scope.model = {
