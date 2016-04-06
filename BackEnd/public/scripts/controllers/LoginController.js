@@ -9,7 +9,8 @@ angular.module('babelrenting').controller('LoginController', ["APIClient", "$sco
             APIClient.testLogin($scope.model)
                 .then(
                     // Movie found
-                    function(movie) {
+                    function() {
+                        console.log("La función del controller de login da el visto bueno, procedemos a guardar en el localStorage el usuario");
                         APIClient.saveUser($scope.model);
                         console.log("Guardado con éxito desde LoginController");
                         $scope.successMessage = "Username saved! ";

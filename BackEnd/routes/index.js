@@ -5,8 +5,9 @@ var User = mongoose.model("User");
 var passwordHash = require('sha256');
 
 //Aquí validaremos el login del usuario para comprobar si el username y la pw coinciden con la de al BBDD
+
 router.post("/", function(req, res) {
-	console.log("Entro en el post de index.js");
+    console.log("Entro en el post de index.js");
     var user = new User(req.body);
     var name = req.body.name;
     var password = req.body.password;
@@ -15,16 +16,20 @@ router.post("/", function(req, res) {
     } else {
         var filter = {};
         filter.name = name;
-        var queryName = User.find({ name: req.body.name });
+        console.log("El nombre que lleva el filtro es", filter.name);
+        var queryName = User.find({ name: filter.name });
         queryName.exec(function(err, rows) {
             if (err) {
                 return console.error("error al logear");
             } else if (rows.length === 0) {
                 return console.error("El nombre de usuario no existe");
             } else {
+                console.log("La pw antes del hash es", user.password);
                 user.password = passwordHash(user["password"]);
-                filter.password = password;
-                var queryPassword = User.find({ password: req.body.password });
+                console.log("La pw después del hash es", user.password);
+                filter.password = user.password;
+                console.log("La pw en el filtro tras ser hasheada es", filter.password);
+                var queryPassword = User.find({ password: filter.password });
                 queryPassword.exec(function(err, rows) {
                     if (err) {
                         return console.error("error al logear");

@@ -16,6 +16,7 @@ var users = require('./routes/users');
 //API
 var apiFacturas = require("./routes/api/v1/factura");
 var apiUsers = require("./routes/users");
+var apiIndex = require("./routes/index");
 
 
 var app = express();
@@ -39,8 +40,9 @@ app.use('/', routes);
 app.use('/users', users);
 
 //Rutas de API V1
-app.use("/api/v1/factura", apiFacturas); //cambiado
+app.use("/api/v1/factura", apiFacturas);
 app.use("/routes/users", apiUsers);
+app.use("/routes/index", apiIndex);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

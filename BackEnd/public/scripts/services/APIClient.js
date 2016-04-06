@@ -3,28 +3,9 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
 
 
         this.testLogin = function(user) {
-                var deferred = $q.defer();
-                console.log("Estoy en el testLogin del servicio");
-                $http.post('/routes/index', user)
-                    .then(
-                        // ok request
-                        function(response) {
-                            // promise resolve
-                            deferred.resolve(response.data);
-                        },
-                        // KO request
-                        function(response) {
-                            // promise reject
-                            deferred.reject(response.data);
-                        }
-                    );
-                return deferred.promise;
-            }
-            // User logic
-        this.createUser = function(user) {
             var deferred = $q.defer();
-            console.log("Estoy en createUser");
-            $http.post('/routes/users', user)
+            console.log("Estoy en el testLogin del servicio");
+            $http.post('/routes/index', user)
                 .then(
                     // ok request
                     function(response) {
@@ -38,12 +19,33 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
                     }
                 );
             return deferred.promise;
+        }
+
+        // User logic
+
+        this.createUser = function(user) {
+            var deferred = $q.defer();
+            console.log("Estoy en createUser");
+            $http.post('/routes/users', user)
+                .then(
+                    // ok request
+                    function(response) {
+                        // promise resolve
+                        deferred.resolve(response.data);
+                    },
+                    // KO request
+                    function(response) {
+                        // promise reject
+                        deferred.reject("lo hago mal",response.data);
+                    }
+                );
+            return deferred.promise;
 
         }
 
         this.saveUser = function(user) {
-            $log.log("Estoy en APIClient accediendo a saveUser con el name", user.username);
-            $window.localStorage.setItem("username", user.username);
+            $log.log("Estoy en APIClient accediendo a saveUser con el name", user.name);
+            $window.localStorage.setItem("username", user.name);
         };
 
         this.takeUser = function() {
