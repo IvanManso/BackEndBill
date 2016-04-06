@@ -36141,6 +36141,9 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
         }).when(paths.url.movieDetail, {
             controller: 'MovieDetailController',
             templateUrl: 'views/MediaItemDetail.html'
+        }).when(paths.url.newUser, {
+            controller: 'UserFormController',
+            templateUrl: 'views/UserForm.html'
         }).otherwise({
             templateUrl: 'views/404.html'
         });
@@ -36175,8 +36178,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
 }]);
 
-;angular.module('babelrenting').controller('LoginController',
-    ["APIClient", "$scope", "$window",
+;angular.module('babelrenting').controller('LoginController', ["APIClient", "$scope", "$window",
     function(APIClient, $scope, $window) {
 
         $scope.model = {};
@@ -36190,8 +36192,12 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
             $window.location.href = "#/movies";
         };
 
-    }]
-);
+        $scope.redir = function() {
+            $window.location.href = "#/userNew";
+        }
+
+    }
+]);
 
 ;angular.module('babelrenting').controller('MenuController', 
     ["APIClient", "$window", '$scope', '$location', 'paths', 
@@ -36369,6 +36375,38 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
 );
 
+;angular.module("babelrenting").controller("UserFormController",
+    ["$scope", "$log", "APIClient","$filter", "$window",
+    function($scope, $log, APIClient, $filter, $window) {
+
+        $log.log("Estoy en el controlador");
+
+        //Scope init
+        $scope.model = {};
+        $scope.successMessage = null;
+        $scope.errorMessage = null;
+        //Scope methods
+        $scope.saveUser = function() {
+            $log.log("El movie.owner y el día y demás", $scope.model.username, $scope.model.amount, $scope.model.password);
+            APIClient.createUser($scope.model)
+                .then(
+                    function(movie) {
+                        $log.log("Soy el console.log de la promesa de saveUser que llama a createUser del servicio");
+                        $scope.successMessage = "User saved!";
+                        $log.log($scope.model);
+                        $scope.model = {};
+                        $scope.movieForm.$setPristine();
+                        $window.location.href = "#/";
+                    },
+                    function(error) {
+                        $scope.errorMessage = "Fatal error. Then end is near.";
+                    }
+                )
+        }
+
+    }]
+);
+
 ;angular.module('babelrenting').directive('mediaItem', function() {
 	return {
 		restrict: 'AE',
@@ -36398,6 +36436,11 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
     function($window, $http, $q, $filter, $log, apiPaths, URL) {
 
         // User logic
+        this.createUser = function(user){
+            console.log("Estoy en createUser");
+            return $http.post('/routes/users', user);
+        }
+
         this.saveUser = function(user) {
             $log.log("Estoy en APIClient accediendo a saveUser con el name", user.username);
             $window.localStorage.setItem("username", user.username);
@@ -36454,6 +36497,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
         };
 
         this.getMovie = function(movieId) { //modificar para que devuelva la película pedida
+            console.log("El movieId es", movieId);
             var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
             console.log("El id de la movie es", id);
             return $http.get('/api/v1/factura/:id');
@@ -36523,6 +36567,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 ;angular.module('URL', []).service('URL', ['$log', function($log){
 
 	this.resolve = function(url, params) {
+		console.log("Estoy en el service de la URL la url:", url);
 		console.log("Los params son", params);
 		var finalURL = [];
 		var urlParts = url.split('/');
@@ -36557,7 +36602,8 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 	    movies: "/movies",
 	    movieNew: "/movies/new",
 	    movieDetail: "/movies/:id",
-	    notFound: "/sorry"
+	    notFound: "/sorry",
+	    newUser: "/userNew"
     },
 
     titles: {

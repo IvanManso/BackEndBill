@@ -1,6 +1,7 @@
 angular.module('URL', []).service('URL', ['$log', function($log){
 
 	this.resolve = function(url, params) {
+		console.log("Estoy en el service de la URL la url:", url);
 		console.log("Los params son", params);
 		var finalURL = [];
 		var urlParts = url.split('/');

@@ -1,5 +1,4 @@
-angular.module('babelrenting').controller('LoginController',
-    ["APIClient", "$scope", "$window",
+angular.module('babelrenting').controller('LoginController', ["APIClient", "$scope", "$window",
     function(APIClient, $scope, $window) {
 
         $scope.model = {};
@@ -13,5 +12,9 @@ angular.module('babelrenting').controller('LoginController',
             $window.location.href = "#/movies";
         };
 
-    }]
-);
+        $scope.redir = function() {
+            $window.location.href = "#/userNew";
+        }
+
+    }
+]);

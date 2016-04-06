@@ -13,6 +13,9 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
         }).when(paths.url.movieDetail, {
             controller: 'MovieDetailController',
             templateUrl: 'views/MediaItemDetail.html'
+        }).when(paths.url.newUser, {
+            controller: 'UserFormController',
+            templateUrl: 'views/UserForm.html'
         }).otherwise({
             templateUrl: 'views/404.html'
         });

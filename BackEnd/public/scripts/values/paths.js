@@ -5,7 +5,8 @@ angular.module("babelrenting").constant("paths", {
 	    movies: "/movies",
 	    movieNew: "/movies/new",
 	    movieDetail: "/movies/:id",
-	    notFound: "/sorry"
+	    notFound: "/sorry",
+	    newUser: "/userNew"
     },
 
     titles: {

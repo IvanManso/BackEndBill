@@ -2,6 +2,11 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
     function($window, $http, $q, $filter, $log, apiPaths, URL) {
 
         // User logic
+        this.createUser = function(user){
+            console.log("Estoy en createUser");
+            return $http.post('/routes/users', user);
+        }
+
         this.saveUser = function(user) {
             $log.log("Estoy en APIClient accediendo a saveUser con el name", user.username);
             $window.localStorage.setItem("username", user.username);
@@ -58,6 +63,7 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
         };
 
         this.getMovie = function(movieId) { //modificar para que devuelva la película pedida
+            console.log("El movieId es", movieId);
             var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
             console.log("El id de la movie es", id);
             return $http.get('/api/v1/factura/:id');
