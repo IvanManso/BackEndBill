@@ -22,7 +22,7 @@
             </td>
             <td>
                 <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="getDetail(item.id)"class="btn btn-default">Detail</a>
-                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter({ stuff: item })" class="btn btn-default" ng-disabled="item.paid == true">Pay</a>
+                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter(item)" class="btn btn-default" ng-disabled="item.paid == true">Pay</a>
             </td>
         </tr>
     </tbody>

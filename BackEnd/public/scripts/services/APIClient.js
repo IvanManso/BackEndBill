@@ -44,13 +44,13 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
         }
 
         this.saveUser = function(user) {
-            $log.log("Estoy en APIClient accediendo a saveUser con el name", user.name);
+            //$log.log("Estoy en APIClient accediendo a saveUser con el name", user.name);
             $window.localStorage.setItem("username", user.name);
         };
 
         this.takeUser = function() {
             var user = $window.localStorage.getItem("username");
-            $log.log("Estoy en APIClient accediendo a takeUser:", user);
+            //$log.log("Estoy en APIClient accediendo a takeUser:", user);
             return user;
         };
 
@@ -115,44 +115,32 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
             return $http.post('/api/v1/factura', movie);
         }
 
-        /* this.createMovie = function(movie) {
-             // deferred object creation
-             var deferred = $q.defer();
-
-
-             // async work
-             $http.post(apiPaths.movies, movie)
-                 .then(
-                     // ok request
-                     function(response) {
-                         // promise resolve
-                         deferred.resolve(response.data);
-                     },
-                     // KO request
-                     function(response) {
-                         // promise reject
-                         deferred.reject(response.data);
-                     }
-                 );
-
-             // return promise
-             return deferred.promise;
-
-         }; */
 
         this.rentMovie = function(movie) {
             // deferred object creation
+            console.log("El objeto que me han pasado movie contiene", movie);
             var deferred = $q.defer(movie);
-            var url = URL.resolve(apiPaths.movieDetail, { id: movie.id });
+            //var url = URL.resolve(apiPaths.movieDetail, { id: movie.id });
             console.log("Los datos de movie para ver el id son", movie);
 
-            // async work
-            $http.put(url, movie)
+            // async work '/api/v1/factura/' + movie.id
+            console.log("TRAS ESTO COMENZARÁ LA PETICIÓN AJAX DE PUT");
+            $http.put('/api/v1/factura/' + movie._id, movie) //modificar
                 .then(
                     // ok request
                     function(response) {
                         // promise resolve
-                        deferred.resolve(response.data);
+                        console.log("PETICIÓN PUT COMPLETADA, PROCEDEMOS A REALIZAR EL GET DE LA MISMA PARA QUE TENGAMOS LOS DATOS ACTUALZIADOS");
+                        $http.get('/api/v1/factura/' + movie._id).then(
+                            function(response) {
+                                deferred.resolve(response.data);
+                            },
+
+                            function(response) {
+                                // promise reject
+                                deferred.reject(response.data);
+                            }
+                        );
                     },
                     // KO request
                     function(response) {

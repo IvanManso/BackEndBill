@@ -28,18 +28,19 @@ var User = mongoose.model("User");
  *     }
  */
 
- /*app.route('/api/v1/factura/:id')
-    .get(function(req, res) {
-    var facturaId = parseInt(req.params.id);
-    var data = {};
-    for (var i = 0, len = bills.length; i < len; i++) {
-        if (bills[i].id === facturaId) {
-            data = bills[i];
-            break;
-        }
-    }
-    return res.json(data);
-    });*/
+/*app.route('/api/v1/factura/:id')
+   .get(function(req, res) {
+   var facturaId = parseInt(req.params.id);
+   var data = {};
+   for (var i = 0, len = bills.length; i < len; i++) {
+       if (bills[i].id === facturaId) {
+           data = bills[i];
+           break;
+       }
+   }
+   return res.json(data);
+   });*/
+
 
 router.get('/:id', function(req, res) {
     console.log("El id en el getMovie por id de factura es", req.params.id);
@@ -54,6 +55,45 @@ router.get('/:id', function(req, res) {
         }
     });
 });
+
+router.put(':id', function(req, res) {
+    var bill = new Factura({
+        owner: req.body.owner,
+        company: req.body.company,
+        date: req.body.date,
+        payment_date: req.body.payment_date,
+        detail: req.body.detail,
+        price: req.body.price,
+        paid: req.body.paid
+    });
+
+    var upsertData = bill.toObject();
+    console.log("EL UPSERTDATA ES", upsertData);
+    delete upsertData._id;
+
+    return bill.update({ _id: req.params.id }, upsertData, { upsert: true }, function(err) {
+        if (!err) {
+            return res.send("updated");
+        } else {
+            console.log(err);
+            return res.send(404, { error: "Person was not updated." });
+        }
+    });
+});
+
+/*router.put('/:id', function(req, res) {
+    console.log("El id en el PUT ES", req.params.id);
+    var queryName = Factura.find({ _id: req.params.id });
+    queryName.exec(function(err, rows) {
+        if (err) {
+            console.log("Error al realizar el get de una factura en concreto");
+            return res.json({ result: false, err: err });
+        } else {
+            console.log("Get de una película en concreto completado con las siguientes filas", rows);
+            return res.json({ result: true, rows: rows });
+        }
+    });
+});*/
 
 router.get('/', function(req, res) {
     var owner = req.query.owner || "";

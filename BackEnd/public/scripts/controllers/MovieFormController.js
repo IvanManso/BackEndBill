@@ -1,5 +1,4 @@
-angular.module("babelrenting").controller("MovieFormController",
-    ["$scope", "$log", "APIClient","$filter", "$window",
+angular.module("babelrenting").controller("MovieFormController", ["$scope", "$log", "APIClient", "$filter", "$window",
     function($scope, $log, APIClient, $filter, $window) {
 
         $log.log("Estoy en el controlador");
@@ -33,5 +32,9 @@ angular.module("babelrenting").controller("MovieFormController",
                 )
         }
 
-    }]
-);
+        $scope.cancel = function() {
+            $window.location.href = "#/movies";
+        }
+
+    }
+]);

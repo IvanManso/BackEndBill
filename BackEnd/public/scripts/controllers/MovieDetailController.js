@@ -9,6 +9,8 @@ angular.module('babelrenting').controller('MovieDetailController',
 		$log.log('Inicializo scope.user en MDC:', $scope.user);
 		// Controller init
 		$scope.$emit('ChangeTitle', 'Loading...');
+
+
 		APIClient.getMovie($routeParams.id) //Aquí hay que hacer la petición a Node
 			.then(
 			// Movie found

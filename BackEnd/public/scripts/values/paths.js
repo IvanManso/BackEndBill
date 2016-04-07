@@ -3,7 +3,7 @@ angular.module("babelrenting").constant("paths", {
     url: {
 	    home: "/",
 	    movies: "/movies",
-	    movieNew: "/movies/new",
+	    movieNew: "/movie/new",
 	    movieDetail: "/movies/:id",
 	    notFound: "/sorry",
 	    newUser: "/userNew"
