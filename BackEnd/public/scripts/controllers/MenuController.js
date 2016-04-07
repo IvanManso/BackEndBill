@@ -1,5 +1,5 @@
-angular.module('babelrenting').controller('MenuController', 
-    ["APIClient", "$window", '$scope', '$location', 'paths', 
+angular.module('babelrenting').controller('MenuController',
+    ["APIClient", "$window", '$scope', '$location', 'paths',
     function(APIClient, $window, $scope, $location, paths) {
 
         // Scope init
@@ -8,6 +8,14 @@ angular.module('babelrenting').controller('MenuController',
         };
         $scope.paths = paths;
 
+        $scope.getUser = function(){
+            if(APIClient.takeUser() == ""){
+                return null;
+            }
+            else{
+                return APIClient.takeUser();
+            }
+        }
         // Scope methods
         $scope.getClassForItem = function(item) {
             if ($scope.model.selectedItem === item) {
@@ -16,6 +24,8 @@ angular.module('babelrenting').controller('MenuController',
                 return '';
             }
         };
+
+
 
         $scope.clearUsername = function() {
             APIClient.clearUser()

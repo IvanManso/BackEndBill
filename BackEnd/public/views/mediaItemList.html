@@ -5,12 +5,12 @@
             <th>Company</th>
             <th>Price</th>
             <th>
-                <input type="search" ng-model="query.title" placeholder="Search..." class="form-control">
+                <input type="search" ng-model="query.company" placeholder="Search..." class="form-control">
             </th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="item in model | filter:query">
+        <tr ng-repeat="item in model | filter:query" ng-hide = "item.owner != user">
             <td>
                 {{::item.owner}}
             </td>
