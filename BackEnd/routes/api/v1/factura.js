@@ -43,13 +43,13 @@ var User = mongoose.model("User");
 
 router.get('/:id', function(req, res) {
     console.log("El id en el getMovie por id de factura es", req.params.id);
-    var queryName = Factura.find({ id: req.params.id });
+    var queryName = Factura.find({ _id: req.params.id });
     queryName.exec(function(err, rows) {
         if (err) {
             console.log("Error al realizar el get de una factura en concreto");
             return res.json({ result: false, err: err });
         } else {
-            console.log("Get de una película en concreto completado");
+            console.log("Get de una película en concreto completado con las siguientes filas", rows);
             return res.json({ result: true, rows: rows });
         }
     });

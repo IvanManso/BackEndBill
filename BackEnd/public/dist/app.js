@@ -36133,6 +36133,9 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
         // url configuration
         $routeProvider.when(paths.url.home, {
             templateUrl: 'views/Login.html'
+        }).when(paths.url.movieDetail, {
+            controller: 'MovieDetailController',
+            templateUrl: 'views/mediaItem.html'
         }).when(paths.url.movies, {
             templateUrl: 'views/MoviesList.html'
         }).when(paths.url.movieNew, {
@@ -36258,13 +36261,17 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 		$log.log('Inicializo scope.user en MDC:', $scope.user);
 		// Controller init
 		$scope.$emit('ChangeTitle', 'Loading...');
+		console.log("Voy a acceder al get movie del MovieDetailController");
 		APIClient.getMovie($routeParams.id) //Aquí hay que hacer la petición a Node
 			.then(
 			// Movie found
 			function(movie) {
-				$scope.model = movie;
+				console.log("La movie es", movie);
+				$scope.model = movie.data.rows[0];
+				console.log("El scope.model es", $scope.model);
+				console.log("El scope.model.owner es", $scope.model.owner);
 				$scope.uiState = 'ideal';
-				$scope.$emit('ChangeTitle', $scope.model.title);
+				$scope.$emit('ChangeTitle', $scope.model.id);
 			},
 			// Movie not found
 			function(error) {
@@ -36330,6 +36337,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
             // User init
             $scope.getDetail = function(id) {
+                console.log("Voy a realizar el getDetail del MoviesListController");
                 APIClient.getMovie(id).then(
                     function(data) {
                         console.log("Los datos son", data);
@@ -36337,7 +36345,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                         if (movies.length === 0) {
                             $scope.uiState = 'blank';
                         } else {
-                            $scope.model = movies.data.rows;
+                            $scope.model = data.rows; //aquí debe de estar el error
                             $scope.uiState = 'ideal';
                         }
                     },
@@ -36486,7 +36494,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                     // KO request
                     function(response) {
                         // promise reject
-                        deferred.reject("lo hago mal",response.data);
+                        deferred.reject("lo hago mal", response.data);
                     }
                 );
             return deferred.promise;
@@ -36520,6 +36528,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                     // ok request
                     function(response) {
                         // promise resolve
+                        console.log("Servicio apiRequest completado");
                         deferred.resolve(response.data);
                     },
                     // KO request
@@ -36530,6 +36539,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                 );
 
             // return promise
+            console.log("La promesa devuelta es", deferred.promise);
             return deferred.promise;
 
         };
@@ -36547,9 +36557,10 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
             var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
             console.log("El id de la facturas es", movieId);
             console.log("Soy el getMovie, después de esta acción debería hacer la petición ajax de get con el id que tengo", movieId);
+            console.log("La URL es", url);
             return $http.get('/api/v1/factura/' + movieId);
-            //return this.apiRequest(url);
 
+            //return this.apiRequest(url);
         };
 
         this.getMovies = function() {
@@ -36636,13 +36647,9 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                 }
                 finalURL.push(paramValue);
             } else {
-                console.log("El paramValue1 es", paramValue);
-                console.log("Salgo de url1");
                 finalURL.push(urlPart);
             }
         }
-        console.log("El paramValue2 es", paramValue);
-        console.log("Salgo de url2");
         return finalURL.join('/');
     };
 
@@ -36650,7 +36657,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
 ;angular.module("babelrenting").value("apiPaths", {
 	movies: "api/movies",
-	movieDetail: "api/movies/:id",
+	movieDetail: "/api/v1/factura/:id",
 });
 ;angular.module("babelrenting").constant("paths", {
 

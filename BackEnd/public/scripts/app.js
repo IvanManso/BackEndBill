@@ -5,6 +5,9 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
         // url configuration
         $routeProvider.when(paths.url.home, {
             templateUrl: 'views/Login.html'
+        }).when(paths.url.movieDetail, {
+            controller: 'MovieDetailController',
+            templateUrl: 'views/mediaItem.html'
         }).when(paths.url.movies, {
             templateUrl: 'views/MoviesList.html'
         }).when(paths.url.movieNew, {

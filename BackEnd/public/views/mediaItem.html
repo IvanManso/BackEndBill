@@ -1,20 +1,20 @@
-<div class="container">
+<div class="container" ng-controller="MovieDetailController">
     <div class="row">
         <div class="col-xs-12 col-sm-9">
             <h1>{{::model.company}}</h1>
             <div class="row">
                 <div class="col-xs-6">
-                    <span ng-if="model.renter != null">
-                        Paid by {{::model.owner}} the {{::model.payment_date | date:"dd/MM/yyyy"}}
+                    <span>
+                        Paid by {{::model.owner}} in {{::model.payment_date | date:"dd/MM/yyyy"}}
                     </span>
                 </div>
                 <div class="col-xs-6">
                     <div class="text-right">
                         Upload by {{::model.owner}} in  {{::model.date | date:"dd/MM/yyyy"}}
                     </div>
+                    <img width="500" height="200" src="{{::model.detail}}" class="col-centered"></img>
                 </div>
             </div>
-            <p>{{::model.detail}}</p>
         </div>
     </div>
 </div>

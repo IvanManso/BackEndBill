@@ -18,13 +18,9 @@ angular.module('URL', []).service('URL', ['$log', function($log) {
                 }
                 finalURL.push(paramValue);
             } else {
-                console.log("El paramValue1 es", paramValue);
-                console.log("Salgo de url1");
                 finalURL.push(urlPart);
             }
         }
-        console.log("El paramValue2 es", paramValue);
-        console.log("Salgo de url2");
         return finalURL.join('/');
     };
 

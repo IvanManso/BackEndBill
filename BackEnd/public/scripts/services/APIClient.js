@@ -36,7 +36,7 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
                     // KO request
                     function(response) {
                         // promise reject
-                        deferred.reject("lo hago mal",response.data);
+                        deferred.reject("lo hago mal", response.data);
                     }
                 );
             return deferred.promise;
@@ -70,6 +70,7 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
                     // ok request
                     function(response) {
                         // promise resolve
+                        console.log("Servicio apiRequest completado");
                         deferred.resolve(response.data);
                     },
                     // KO request
@@ -80,6 +81,7 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
                 );
 
             // return promise
+            console.log("La promesa devuelta es", deferred.promise);
             return deferred.promise;
 
         };
@@ -97,9 +99,10 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
             var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
             console.log("El id de la facturas es", movieId);
             console.log("Soy el getMovie, después de esta acción debería hacer la petición ajax de get con el id que tengo", movieId);
+            console.log("La URL es", url);
             return $http.get('/api/v1/factura/' + movieId);
-            //return this.apiRequest(url);
 
+            //return this.apiRequest(url);
         };
 
         this.getMovies = function() {

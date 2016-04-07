@@ -9,6 +9,7 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
 
             // User init
             $scope.getDetail = function(id) {
+                console.log("Voy a realizar el getDetail del MoviesListController");
                 APIClient.getMovie(id).then(
                     function(data) {
                         console.log("Los datos son", data);
@@ -16,7 +17,7 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
                         if (movies.length === 0) {
                             $scope.uiState = 'blank';
                         } else {
-                            $scope.model = movies.data.rows;
+                            $scope.model = data.rows; //aquí debe de estar el error
                             $scope.uiState = 'ideal';
                         }
                     },
