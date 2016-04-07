@@ -4,6 +4,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@import url(https://fonts.googleapis.com/css?family=Arvo:400,700);
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -6732,3 +6733,9 @@ button.close {
   margin-top: 7px;
   margin-left: 10px;
 }
+/*.row {
+	display: inline;
+}*/
+/*.body{
+	background-color: lightgray;
+}*/
