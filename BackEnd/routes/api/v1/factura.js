@@ -56,30 +56,18 @@ router.get('/:id', function(req, res) {
     });
 });
 
-router.put(':id', function(req, res) {
-    var bill = new Factura({
-        owner: req.body.owner,
-        company: req.body.company,
-        date: req.body.date,
-        payment_date: req.body.payment_date,
-        detail: req.body.detail,
-        price: req.body.price,
-        paid: req.body.paid
-    });
-
-    var upsertData = bill.toObject();
-    console.log("EL UPSERTDATA ES", upsertData);
-    delete upsertData._id;
-
-    return bill.update({ _id: req.params.id }, upsertData, { upsert: true }, function(err) {
-        if (!err) {
-            return res.send("updated");
-        } else {
-            console.log(err);
-            return res.send(404, { error: "Person was not updated." });
+router.put('/:id', function(req, res) {
+    //var bill = new Factura(req.body);
+    Factura.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, data) {
+        if (err){
+            return res.json ({result: false, err: err});
+        }
+        else {
+            return res.json({ result: true, rows:data });
         }
     });
-});
+    });
+
 
 /*router.put('/:id', function(req, res) {
     console.log("El id en el PUT ES", req.params.id);
