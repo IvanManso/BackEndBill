@@ -2,10 +2,12 @@
     "usuarios": [{
         "name": "Ivan",
         "amount": 500,
-        "password": "ivan"
+        "password": "ivan",
+        "email": "ivan@gmail.com"
     }, {
         "name": "Raul",
         "amount": 700,
-        "password": "raul"
+        "password": "raul",
+        "email": "raul@gmail.com"
     }]
 }

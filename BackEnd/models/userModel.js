@@ -15,7 +15,8 @@ var conn = require('../lib/connectMongo'); //conectar con drivers
 var usuarioSchema = mongoose.Schema({
     name: String,
     amount: Number,
-    password: String
+    password: String,
+    email: String
 });
 
 

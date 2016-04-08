@@ -4,6 +4,7 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
 
         this.testLogin = function(user) {
             var deferred = $q.defer();
+            var response;
             console.log("Estoy en el testLogin del servicio");
             $http.post('/routes/index', user)
                 .then(
@@ -15,6 +16,7 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
                     // KO request
                     function(response) {
                         // promise reject
+                        /*$window.alert( "Your username or password is incorrect. Please check your credentials and try again.");*/
                         deferred.reject(response.data);
                     }
                 );
@@ -95,11 +97,11 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
 
         }; */
         this.getMovie = function(movieId) { //modificar para que devuelva la película pedida
-            console.log("El movieId es", movieId);
+            //console.log("El movieId es", movieId);
             var url = URL.resolve(apiPaths.movieDetail, { id: movieId });
-            console.log("El id de la facturas es", movieId);
-            console.log("Soy el getMovie, después de esta acción debería hacer la petición ajax de get con el id que tengo", movieId);
-            console.log("La URL es", url);
+            //console.log("El id de la facturas es", movieId);
+            //console.log("Soy el getMovie, después de esta acción debería hacer la petición ajax de get con el id que tengo", movieId);
+            //console.log("La URL es", url);
             return $http.get('/api/v1/factura/' + movieId);
 
             //return this.apiRequest(url);
@@ -116,39 +118,73 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
         }
 
 
-        this.rentMovie = function(movie) {
+        this.rentMovie = function(movie, name) {
             // deferred object creation
             console.log("El objeto que me han pasado movie contiene", movie);
-            var deferred = $q.defer(movie);
+            var deferred = $q.defer(name);
             //var url = URL.resolve(apiPaths.movieDetail, { id: movie.id });
             console.log("Los datos de movie para ver el id son", movie);
+            console.log("El nombre en APIClient es", name);
 
             // async work '/api/v1/factura/' + movie.id
             console.log("TRAS ESTO COMENZARÁ LA PETICIÓN AJAX DE PUT");
-            $http.put('/api/v1/factura/' + movie._id, movie) //modificar
-                .then(
-                    // ok request
-                    function(response) {
-                        // promise resolve
-                        console.log("PETICIÓN PUT COMPLETADA, PROCEDEMOS A REALIZAR EL GET DE LA MISMA PARA QUE TENGAMOS LOS DATOS ACTUALZIADOS");
-                        $http.get('/api/v1/factura/' + movie._id).then(
-                            function(response) {
-                                deferred.resolve(response.data);
-                            },
+            $http.put('/routes/users/' + name, movie).then(
+                // ok request
+                function(response) {
+                    // promise resolve
+                    console.log("PETICIÓN PUT COMPLETADA, PROCEDEMOS A REALIZAR EL GET DE LA MISMA PARA QUE TENGAMOS LOS DATOS ACTUALZIADOS");
+                    $http.get('/api/v1/factura/' + movie._id).then(
+                        function(response) {
+                            deferred.resolve(response.data);
+                        },
 
+                        function(response) {
+                            // promise reject
+                            deferred.reject(response.data);
+                        }
+                    );
+                },
+                // KO request
+                function(response) {
+                    // promise reject
+                    deferred.reject(response.data);
+                }
+            );
+            /*.then(
+                function(response) {
+                    $http.put('/api/v1/factura/' + movie._id, movie);
+                     //modificar
+                        .then(
+                            // ok request
+                            function(response) {
+                                // promise resolve
+                                console.log("PETICIÓN PUT COMPLETADA, PROCEDEMOS A REALIZAR EL GET DE LA MISMA PARA QUE TENGAMOS LOS DATOS ACTUALZIADOS");
+                                $http.get('/api/v1/factura/' + movie._id).then(
+                                    function(response) {
+                                        deferred.resolve(response.data);
+                                    },
+
+                                    function(response) {
+                                        // promise reject
+                                        deferred.reject(response.data);
+                                    }
+                                );
+                            },
+                            // KO request
                             function(response) {
                                 // promise reject
                                 deferred.reject(response.data);
                             }
                         );
-                    },
-                    // KO request
-                    function(response) {
-                        // promise reject
-                        deferred.reject(response.data);
-                    }
-                );
+                },
 
+                function(response) {
+                    // promise reject
+                    deferred.reject(response.data);
+                }
+            )
+
+                */
             // return promise
             return deferred.promise;
 

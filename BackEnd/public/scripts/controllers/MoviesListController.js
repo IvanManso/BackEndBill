@@ -38,11 +38,12 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
             };
 
             //AQUÍ
-            $scope.saveRenter = function(movie) {
+            $scope.saveRenter = function(movie, name) {
                 movie.payment_date = $filter('date')(new Date(), 'yyyy-MM-dd');
                 movie.paid = true;
+                console.log("El name es", name);
                 console.log("EL ID DE LA MOVIE EN SAVERENTER ES", movie._id);
-                APIClient.rentMovie(movie);
+                APIClient.rentMovie(movie, name);
             };
 
             // Controller start

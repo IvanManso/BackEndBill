@@ -19,6 +19,21 @@ router.get('/', function(req, res) {
     });
 });
 
+router.put('/:name', function(req, res) {
+    console.log("El precio de la factura que le he pasado en el PUT es", req.body.price);
+    console.log("El req.params.name que tiene en la url es", req.params.name);
+    var queryName = User.find({ name: req.params.name });
+    console.log("El dinero que tiene en su cuenta el usuarios",queryName);
+    queryName.amount = queryName.amount - req.body.price;
+    User.update({ name: req.params.name }, queryName, function(err, data) { //mirar como poner los cambios a modificar cambiando el amount
+        if (err) {
+            return res.json({ result: false, err: err });
+        } else {
+            return res.json({ result: true, rows: rows });
+        }
+    });
+});
+
 
 
 /**
@@ -40,45 +55,38 @@ Tras esto comprobamos si el nombre ya se encuentra en nuestra DB y si este no se
  */
 
 router.post("/", function(req, res) {
-    var user = new User(req.body);
-    var name = req.body.name;
-    var amount = req.body.amount;
-    var password = req.body.password;
-    if (name === "" || amount === "" || password === "") {
-        return console.error("Campos vacíos");
-    } else {
-        var filter = {};
-        filter.name = name;
-        filter.amount = amount;
-        var queryName = User.find({ name: req.body.name });
-        queryName.exec(function(err, rows) {
-            if (err) {
-                return console.error("error al registrar");
-            } else if (rows.length !== 0) {
-                return console.error("Algún campo se encuentra repetido");
-            } else {
-                var queryAmount = User.find({ amount: req.body.amount });
-                queryAmount.exec(function(err, rows) {
-                    if (err) {
-                        return console.error("error al registrar");
-                    } else if (rows.length !== 0) {
-                        return console.error("Algún campo se encuentra repetido");
-                    } else {
-                        user.password = passwordHash(user["password"]);
-                        user.save(function(err, saved) {
-                            if (err) {
-                                return res.json({ result: false, err: err });
-                            } else {
-                                console.log("Registro completado");
-                                return res.json({ result: true, row: saved });
-                            }
-                        });
-                    };
-                });
-            };
-        });
-    }
+var user = new User(req.body);
+var name = req.body.name;
+var amount = req.body.amount;
+var password = req.body.password;
+var email = req.body.email;
+if (name === "" || amount === "" || password === "" || email === "") {
+    return console.error("Campos vacíos");
+} else {
+    var filter = {};
+    filter.name = name;
+    filter.amount = amount;
+    var queryName = User.find({ name: req.body.name });
+    queryName.exec(function(err, rows) {
+        if (err) {
+            return console.error("error al registrar");
+        } else if (rows.length !== 0) {
+            return console.error("Algún campo se encuentra repetido");
+        } else {
+            user.password = passwordHash(user["password"]);
+            user.save(function(err, saved) {
+                if (err) {
+                    return res.json({ result: false, err: err });
+                } else {
+                    console.log("Registro completado");
+                    return res.json({ result: true, row: saved });
+                }
+            });
+        };
+    });
+};
 });
+
 
 
 module.exports = router;

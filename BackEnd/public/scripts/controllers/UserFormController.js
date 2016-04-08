@@ -9,7 +9,7 @@ angular.module("babelrenting").controller("UserFormController", ["$scope", "$log
         $scope.errorMessage = null;
         //Scope methods
         $scope.saveUser = function() {
-            $log.log("El movie.owner y el día y demás", $scope.model.username, $scope.model.amount, $scope.model.password);
+            $log.log("El movie.owner y el día y demás", $scope.model.username, $scope.model.amount, $scope.model.password, $scope.model.email);
             APIClient.createUser($scope.model)
                 .then(
                     function(movie) {
@@ -26,6 +26,10 @@ angular.module("babelrenting").controller("UserFormController", ["$scope", "$log
                         $scope.errorMessage = "Fatal error. Then end is near.";
                     }
                 )
+        }
+
+        $scope.cancel = function() {
+            $window.location.href = "#/";
         }
 
     }
