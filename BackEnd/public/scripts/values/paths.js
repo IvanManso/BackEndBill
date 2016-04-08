@@ -2,9 +2,9 @@ angular.module("babelrenting").constant("paths", {
 
     url: {
 	    home: "/",
-	    movies: "/movies",
-	    movieNew: "/movie/new",
-	    movieDetail: "/movies/:id",
+	    movies: "/bills",
+	    movieNew: "/bill/new",
+	    movieDetail: "/bills/:id",
 	    notFound: "/sorry",
 	    newUser: "/userNew"
     },

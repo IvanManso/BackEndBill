@@ -1,4 +1,4 @@
 angular.module("babelrenting").value("apiPaths", {
-	movies: "api/movies",
+	movies: "api/factura",
 	movieDetail: "/api/v1/factura/:id",
 });

@@ -24,7 +24,7 @@ angular.module("babelrenting").controller("MovieFormController", ["$scope", "$lo
                         $log.log($scope.model);
                         $scope.model = {};
                         $scope.movieForm.$setPristine();
-                        $window.location.href = "#/movies";
+                        $window.location.href = "#/bills";
                     },
                     function(error) {
                         $scope.errorMessage = "Fatal error. Then end is near.";
@@ -33,7 +33,7 @@ angular.module("babelrenting").controller("MovieFormController", ["$scope", "$lo
         }
 
         $scope.cancel = function() {
-            $window.location.href = "#/movies";
+            $window.location.href = "#/bills";
         }
 
     }

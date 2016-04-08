@@ -36199,7 +36199,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                         APIClient.saveUser($scope.model);
                         console.log("Guardado con éxito desde LoginController");
                         $scope.successMessage = "Username saved! ";
-                        $window.location.href = "#/movies";
+                        $window.location.href = "#/bills";
                     },
                     // Movie not found
                     function(error) {
@@ -36322,7 +36322,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                         $log.log($scope.model);
                         $scope.model = {};
                         $scope.movieForm.$setPristine();
-                        $window.location.href = "#/movies";
+                        $window.location.href = "#/bills";
                     },
                     function(error) {
                         $scope.errorMessage = "Fatal error. Then end is near.";
@@ -36331,7 +36331,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
         }
 
         $scope.cancel = function() {
-            $window.location.href = "#/movies";
+            $window.location.href = "#/bills";
         }
 
     }
@@ -36656,16 +36656,16 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 }]);
 
 ;angular.module("babelrenting").value("apiPaths", {
-	movies: "api/movies",
+	movies: "api/factura",
 	movieDetail: "/api/v1/factura/:id",
 });
 ;angular.module("babelrenting").constant("paths", {
 
     url: {
 	    home: "/",
-	    movies: "/movies",
-	    movieNew: "/movie/new",
-	    movieDetail: "/movies/:id",
+	    movies: "/bills",
+	    movieNew: "/bill/new",
+	    movieDetail: "/bills/:id",
 	    notFound: "/sorry",
 	    newUser: "/userNew"
     },
