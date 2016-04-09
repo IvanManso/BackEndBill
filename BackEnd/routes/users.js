@@ -22,16 +22,26 @@ router.get('/', function(req, res) {
 router.put('/:name', function(req, res) {
     console.log("El precio de la factura que le he pasado en el PUT es", req.body.price);
     console.log("El req.params.name que tiene en la url es", req.params.name);
-    var queryName = User.find({ name: req.params.name });
-    console.log("El dinero que tiene en su cuenta el usuarios",queryName);
-    queryName.amount = queryName.amount - req.body.price;
-    User.update({ name: req.params.name }, queryName, function(err, data) { //mirar como poner los cambios a modificar cambiando el amount
+    var precioFact = req.body.price;
+    var userName = req.params.name;
+    //var queryName = User.find({ name: req.params.name });
+    User.find({ name: req.params.name }, function(err, document){
+        console.log("Dentro del callback de el User.find tenemos el dinero inicial del usuario es", document[0].amount);
+        console.log("El precio de la factura es", precioFact);
+        document[0].amount = document[0].amount - precioFact;
+        console.log("Dentro del callback de el User.find tenemos el dinero final del usuario es", document[0].amount);
+        console.log("El user es", userName,"y le voy a mandar que actualice", document);
+         User.update({ name: userName }, document[0], function(err, rows) { //mirar como poner los cambios a modificar cambiando el amount
         if (err) {
             return res.json({ result: false, err: err });
         } else {
             return res.json({ result: true, rows: rows });
         }
     });
+    });
+    //console.log("El dinero que tiene en su cuenta el usuarios",queryName);
+    //queryName.amount = queryName.amount - req.body.price;
+
 });
 
 
