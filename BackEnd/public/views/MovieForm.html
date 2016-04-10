@@ -1,5 +1,5 @@
 <div ng-controller="MovieFormController">
-    <h1>New Bill</h1>
+    <h1 style="color:white;">New Bill</h1>
     <div class="alert alert-success" ng-show="successMessage" ng-bind-html="successMessage">
     </div>
     <div class="alert alert-danger" ng-show="errorMessage">
@@ -7,19 +7,19 @@
     </div>
     <form name="movieForm" novalidate class="form-horizontal" ng-submit="saveMovie()">
         <div class="form-group" ng-class="{ 'has-success': movieForm.company.$valid, 'has-error': movieForm.company.$invalid && movieForm.company.$dirty }">
-            <label for="company" class="col-sm-2 control-label">Company</label>
+            <label for="company" class="col-sm-2 control-label"><div style="color:white;">Firm</div></label>
             <div class="col-sm-10">
                 <input type="text" name="company" ng-model="model.company" class="form-control" required>
-                <div class="text-danger" ng-show="movieForm.company.$dirty && movieForm.company.$error.required">
-                    Company is required.
+                <div class="text-danger" ng-show="movieForm.company.$dirty && movieForm.company.$error.required"style="color:white;">
+                    Firm (company) is required.
                 </div>
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-success': movieForm.detail.$valid, 'has-error': movieForm.detail.$invalid  }">
-            <label for="detail" class="col-sm-2 control-label">Detail URL</label>
+            <label for="detail" class="col-sm-2 control-label"><div style="color:white;">Detail URL</div></label>
             <div class="col-sm-10">
                 <input type="url" name="detail" ng-model="model.detail" class="form-control" required>
-                <div class="text-danger" ng-show="movieForm.detail.$dirty && movieForm.detail.$error.required">
+                <div class="text-danger" ng-show="movieForm.detail.$dirty && movieForm.detail.$error.required" style="color:white;">
                     The Detail URL is required.
                 </div>
                 <div class="text-danger" ng-show="movieForm.detail.$dirty && movieForm.detail.$error.url">
@@ -28,13 +28,13 @@
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-success': movieForm.price.$valid, 'has-error': movieForm.price.$invalid  }">
-            <label for="price" class="col-sm-2 control-label">Price</label>
+            <label for="price" class="col-sm-2 control-label"><div style="color:white;">Price</div></label>
             <div class="col-sm-10">
                 <input type="number" name="price" ng-model="model.price" class="form-control" min="0" required>
-                <div class="text-danger" ng-show="movieForm.price.$dirty && movieForm.price.$error.required">
-                    The Rating is required.
+                <div class="text-danger" ng-show="movieForm.price.$dirty && movieForm.price.$error.required" style="color:white;">
+                    The price is required.
                 </div>
-                <div class="text-danger" ng-show="movieForm.price.$dirty && (movieForm.price.$error.number || movieForm.price.$error.min )">
+                <div class="text-danger" ng-show="movieForm.price.$dirty && (movieForm.price.$error.number || movieForm.price.$error.min )" style="color:white;">
                     The price must be a number higher than 0.
                 </div>
             </div>

@@ -1,4 +1,4 @@
-<h1>New User</h1>
+<h1 style="color:white;">New User</h1>
     <div class="alert alert-success" ng-show="successMessage" ng-bind-html="successMessage">
     </div>
     <div class="alert alert-danger" ng-show="errorMessage">
@@ -6,39 +6,39 @@
     </div>
     <form name="movieForm" novalidate class="form-horizontal" ng-submit="saveUser()">
         <div class="form-group" ng-class="{ 'has-success': movieForm.name.$valid, 'has-error': movieForm.name.$invalid && movieForm.name.$dirty }">
-            <label for="name" class="col-sm-2 control-label">Name</label>
+            <label for="name" class="col-sm-2 control-label"><div style="color:white;">Name</div></label>
             <div class="col-sm-10">
                 <input type="text" name="name" data-minlength="4" ng-model="model.name" class="form-control" required>
-                <div class="help-block">Minimum of 4 characters</div>
+                <div class="help-block" style="color:white;">Minimum of 4 characters</div>
                 </div>
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-success': movieForm.email.$valid, 'has-error': movieForm.email.$invalid  }">
-            <label for="email" class="col-sm-2 control-label">Email</label>
+            <label for="email" class="col-sm-2 control-label"><div style="color:white;">Email</div></label>
             <div class="col-sm-10">
                 <input type="email" name="email" ng-model="model.email" class="form-control" min="0" required>
-                <div class="text-danger" ng-show="movieForm.email.$dirty && movieForm.email.$error.required">
+                <div class="text-danger" ng-show="movieForm.email.$dirty && movieForm.email.$error.required" style="color:white;">
                     Email is required.
                 </div>
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-success': movieForm.amount.$valid, 'has-error': movieForm.amount.$invalid  }">
-            <label for="amount" class="col-sm-2 control-label">Amount</label>
+            <label for="amount" class="col-sm-2 control-label"><div style="color:white;">Cash</div></label>
             <div class="col-sm-10">
                 <input type="number" name="amount" ng-model="model.amount" class="form-control" min="0" required>
-                <div class="text-danger" ng-show="movieForm.amount.$dirty && movieForm.amount.$error.required">
-                    Amount is required.
+                <div class="text-danger" ng-show="movieForm.amount.$dirty && movieForm.amount.$error.required" style="color:white;">
+                    The cash is required.
                 </div>
-                <div class="text-danger" ng-show="movieForm.amount.$dirty && (movieForm.amount.$error.number || movieForm.amount.$error.min )">
-                    The amount must be a number higher than 0.
+                <div class="text-danger" ng-show="movieForm.amount.$dirty && (movieForm.amount.$error.number || movieForm.amount.$error.min )" style="color:white;">
+                    The cash must be a number higher than 0.
                 </div>
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-success': movieForm.password.$valid, 'has-error': movieForm.password.$invalid && movieForm.password.$dirty }">
-            <label for="password" class="col-sm-2 control-label">Password</label>
+            <label for="password" class="col-sm-2 control-label"><div style="color:white;">Pass</div></label>
             <div class="col-sm-10">
                 <input type="password" name="password" data-minlength="4" ng-model="model.password" class="form-control" required>
-                <div class="help-block">Minimum of 4 characters</div>
+                <div class="help-block" style="color:white;">Minimum of 4 characters</div>
                 </div>
             </div>
         </div>
