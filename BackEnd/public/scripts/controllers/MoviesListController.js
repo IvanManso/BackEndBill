@@ -7,6 +7,12 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
             $scope.url = URL.resolve;
             $scope.user = APIClient.takeUser();
 
+           /* $scope.getAmount = function(){
+                APIClient.takeUser();
+                $http.get("/routes/users/" + name);
+                console.log("Las rows son", rows);
+            };*/
+
             // User init
             $scope.getDetail = function(id) {
                 APIClient.getMovie(id).then(

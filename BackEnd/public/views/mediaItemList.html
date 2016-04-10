@@ -14,7 +14,7 @@
                         <p>Price: {{::item.price}}</p>
                         <p>
                             <td><a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="getDetail(item.id)" class="btn btn-default">Detail</a>
-                                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter(item, user)" class="btn btn-default" ng-disabled="item.paid == true || item.price > takeUser().amount">Pay</a></td>
+                                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter(item, user)" class="btn btn-default" ng-disabled="item.paid == true">Pay</a></td>
                         </p>
                     </div>
                 </div>

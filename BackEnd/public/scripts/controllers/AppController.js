@@ -7,6 +7,7 @@ angular.module('babelrenting').controller('AppController', ['$scope', '$location
     controller.titles[paths.url.movies] = paths.titles.bills;
     controller.titles[paths.url.movieNew] = paths.titles.billNew;
     controller.titles[paths.url.newUser] = paths.titles.newUser;
+    controller.titles[paths.url.movieDetail] = paths.titles.movieDetail;
 
 
     //Scope init

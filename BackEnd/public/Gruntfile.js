@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
@@ -17,6 +17,8 @@ module.exports = function (grunt) {
                     'bower_components/angular-route/angular-route.js',
                     'bower_components/angular-sanitize/angular-sanitize.js',
                     'bower_components/moment/moment.js',
+                    'bower_components/jquery/dist/jquery.min.js',
+                    'bower_components/bootstrap/dist/js/bootstrap.js',
                     'scripts/**/*.js',
                     'scripts/*.js'
                 ],
@@ -48,11 +50,11 @@ module.exports = function (grunt) {
                 files: ['scripts/**/*.js', 'scripts/*.js'],
                 tasks: ['concat']
             },
-            styles:{
-            files:["less/*.less"], //observa cualquier cambio en archivos LESS
-            tasks:["less"], //ejecuta la compilación de LESS
-            options:{
-                spawn: false //para que no se quede tostado (¿?)
+            styles: {
+                files: ["less/*.less"], //observa cualquier cambio en archivos LESS
+                tasks: ["less"], //ejecuta la compilación de LESS
+                options: {
+                    spawn: false //para que no se quede tostado (¿?)
                 }
             }
         }

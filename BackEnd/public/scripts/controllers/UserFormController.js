@@ -23,7 +23,7 @@ angular.module("babelrenting").controller("UserFormController", ["$scope", "$log
                     function(error) {
                         //$scope.movieForm.$setPristine();
                         //$window.location.href = "#/userNew";
-                        $scope.errorMessage = "Fatal error. Then end is near.";
+                        $scope.errorMessage = "Fatal error.";
                     }
                 )
         }

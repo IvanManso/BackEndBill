@@ -19,6 +19,16 @@ router.get('/', function(req, res) {
     });
 });
 
+/*router.get('/:name', function(req, res){
+    User.find({ name: req.params.name } function(err, rows){
+        if (err) {
+            return res.json({ result: false, err: err });
+        } else {
+            return res.json({ result: true, rows: rows });
+        }
+    });
+});*/
+
 router.put('/:name', function(req, res) {
     console.log("El precio de la factura que le he pasado en el PUT es", req.body.price);
     console.log("El req.params.name que tiene en la url es", req.params.name);

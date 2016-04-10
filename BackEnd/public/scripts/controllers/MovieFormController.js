@@ -27,7 +27,7 @@ angular.module("babelrenting").controller("MovieFormController", ["$scope", "$lo
                         $window.location.href = "#/bills";
                     },
                     function(error) {
-                        $scope.errorMessage = "Fatal error. Then end is near.";
+                        $scope.errorMessage = "Fatal error.";
                     }
                 )
         }

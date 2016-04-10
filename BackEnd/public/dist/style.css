@@ -6733,6 +6733,9 @@ button.close {
   margin-top: 7px;
   margin-left: 10px;
 }
+.center {
+  margin: auto;
+}
 /*.row {
 	display: inline;
 }*/

@@ -14,10 +14,16 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-													<i class="glyphicon glyphicon-user"></i>
-												</span>
+                                                    <i class="glyphicon glyphicon-user"></i>
+                                                </span>
                                                 <input class="form-control" placeholder="Username" type="text" ng-model="model.name" for="name" autofocus>
+                                                <div class="text-danger" ng-show="myForm.name.$dirty && myForm.name.$error.required">
+                                                    Username is required.
+                                                </div>
                                                 <input class="form-control" placeholder="Password" type="password" ng-model="model.password" for="password" autofocus>
+                                                <div class="text-danger" ng-show="myForm.password.$dirty && myForm.password.$error.required">
+                                                    Password is required.
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="center">
@@ -34,3 +40,4 @@
         </div>
     </div>
 </div>
+

@@ -15,7 +15,8 @@ angular.module("babelrenting").constant("paths", {
 	    billNew: "Save Bill",
 	    movieDetail: "Info",
 	    notFound: "Sorry not found",
-	    newUser: "Create User"
+	    newUser: "Create User",
+	    movieDetail: "Bill Detail"
     }
 });
 

@@ -139,7 +139,7 @@ angular.module('babelrenting').service('APIClient', ["$window", '$http', '$q', '
                     console.log("PETICIÓN PUT2 COMPLETADA, PROCEDEMOS A REALIZAR EL GET DE LA MISMA PARA QUE TENGAMOS LOS DATOS ACTUALZIADOS");
                     console.log("En este momento el movie._id es", movie._id);
                     ///Aquí se cuelga ........
-                    $http.get('/api/v1/factura/' + movie.id).then(
+                    $http.get('/api/v1/factura/' + movie._id).then(
                         function(response) {
                             console.log("Estoy en la promesa del get tras realizar el PUT");
                             deferred.resolve(response.data);
