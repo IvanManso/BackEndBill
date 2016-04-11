@@ -38526,6 +38526,8 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
     controller.titles[paths.url.movieNew] = paths.titles.billNew;
     controller.titles[paths.url.newUser] = paths.titles.newUser;
     controller.titles[paths.url.movieDetail] = paths.titles.movieDetail;
+    controller.titles[paths.url.movieImage] = paths.titles.movieImage;
+
 
 
     //Scope init
@@ -38623,41 +38625,45 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
     }]
 );
 
-;angular.module('babelrenting').controller('MovieDetailController',
-	['$scope', '$routeParams', '$location', '$sce', '$log', 'APIClient', 'paths',
-	function($scope, $routeParams, $location, $sce, $log, APIClient, paths){
+;angular.module('babelrenting').controller('MovieDetailController', ['$scope', '$window', '$routeParams', '$location', '$sce', '$log', 'APIClient', 'paths',
+    function($scope, $window, $routeParams, $location, $sce, $log, APIClient, paths) {
 
-		// Scope init
-		$scope.model = {};
-		$scope.uiState = 'loading';
-		$scope.user = APIClient.takeUser();
-		$log.log('Inicializo scope.user en MDC:', $scope.user);
-		// Controller init
-		$scope.$emit('ChangeTitle', 'Loading...');
+        // Scope init
+        $scope.model = {};
+        $scope.uiState = 'loading';
+        $scope.user = APIClient.takeUser();
+        $log.log('Inicializo scope.user en MDC:', $scope.user);
+        // Controller init
+        $scope.$emit('ChangeTitle', 'Loading...');
 
 
-		APIClient.getMovie($routeParams.id) //Aquí hay que hacer la petición a Node
-			.then(
-			// Movie found
-			function(movie) {
-				$scope.model = movie.data.rows[0];
-				$scope.uiState = 'ideal';
-				$scope.$emit('ChangeTitle', $scope.model.id);
-			},
-			// Movie not found
-			function(error) {
-				// TODO: improve error management
-				$location.url(paths.notFound);
-			}
-		);
+        APIClient.getMovie($routeParams.id) //Aquí hay que hacer la petición a Node
+            .then(
+                // Movie found
+                function(movie) {
+                    $scope.model = movie.data.rows[0];
+                    $scope.uiState = 'ideal';
+                    $scope.$emit('ChangeTitle', $scope.model.id);
+                },
+                // Movie not found
+                function(error) {
+                    // TODO: improve error management
+                    $location.url(paths.notFound);
+                }
+            );
 
-		// Scope method
-		$scope.trustSrc = function(src) {
+        $scope.redir = function() {
+            $window.location.href = "#/bills/image";
+
+        }
+
+        // Scope method
+        $scope.trustSrc = function(src) {
             return $sce.trustAsResourceUrl(src);
         };
 
-	}]
-);
+    }
+]);
 
 ;angular.module("babelrenting").controller("MovieFormController", ["$scope", "$log", "APIClient", "$filter", "$window",
     function($scope, $log, APIClient, $filter, $window) {
@@ -38709,11 +38715,11 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
             $scope.url = URL.resolve;
             $scope.user = APIClient.takeUser();
 
-           /* $scope.getAmount = function(){
-                APIClient.takeUser();
-                $http.get("/routes/users/" + name);
-                console.log("Las rows son", rows);
-            };*/
+            /* $scope.getAmount = function(){
+                 APIClient.takeUser();
+                 $http.get("/routes/users/" + name);
+                 console.log("Las rows son", rows);
+             };*/
 
             // User init
             $scope.getDetail = function(id) {
@@ -38729,9 +38735,9 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                         }
                     },
                     //rejected promise
-                function() {
-                    $scope.uiState = 'error';
-                }
+                    function() {
+                        $scope.uiState = 'error';
+                    }
                 );
             };
 
@@ -38752,6 +38758,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                 console.log("El name es", name);
                 console.log("EL ID DE LA MOVIE EN SAVERENTER ES", movie._id);
                 APIClient.rentMovie(movie, name);
+                APIClient.getMovies();
             };
 
             // Controller start
@@ -39074,7 +39081,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 
 ;angular.module("babelrenting").value("apiPaths", {
 	movies: "api/factura",
-	movieDetail: "/api/v1/factura/:id",
+	movieDetail: "/api/v1/factura/:id"
 });
 ;angular.module("babelrenting").constant("paths", {
 
@@ -39094,7 +39101,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
 	    movieDetail: "Info",
 	    notFound: "Sorry not found",
 	    newUser: "Create User",
-	    movieDetail: "Bill Detail"
+	    movieDetail: "Bill Detail",
     }
 });
 

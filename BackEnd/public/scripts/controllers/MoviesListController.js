@@ -7,11 +7,11 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
             $scope.url = URL.resolve;
             $scope.user = APIClient.takeUser();
 
-           /* $scope.getAmount = function(){
-                APIClient.takeUser();
-                $http.get("/routes/users/" + name);
-                console.log("Las rows son", rows);
-            };*/
+            /* $scope.getAmount = function(){
+                 APIClient.takeUser();
+                 $http.get("/routes/users/" + name);
+                 console.log("Las rows son", rows);
+             };*/
 
             // User init
             $scope.getDetail = function(id) {
@@ -27,9 +27,9 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
                         }
                     },
                     //rejected promise
-                function() {
-                    $scope.uiState = 'error';
-                }
+                    function() {
+                        $scope.uiState = 'error';
+                    }
                 );
             };
 
@@ -50,6 +50,7 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
                 console.log("El name es", name);
                 console.log("EL ID DE LA MOVIE EN SAVERENTER ES", movie._id);
                 APIClient.rentMovie(movie, name);
+                APIClient.getMovies();
             };
 
             // Controller start

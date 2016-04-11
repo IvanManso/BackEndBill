@@ -18,9 +18,11 @@
                 <li ng-class="getClassForItem(paths.url.movieNew)">
                     <a href="#{{::paths.url.movieNew}}" ng-show="getUser() != null">{{::paths.titles.billNew}}</a>
                 </li>
-                <a href="#{{::paths.url.home}}" class="logout btn btn-default glyphicon glyphicon-log-out" ng-click="clearUsername()" ng-show="getUser() != null ">
+                <li>
+                    <a href="#{{::paths.url.home}}" ng-click="clearUsername()" ng-show="getUser() != null ">
                          Logout
                         </a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

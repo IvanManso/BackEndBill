@@ -5,16 +5,16 @@
         </tr>
     </table>
     <div class="onBoard" ng-repeat="item in model | filter:query" ng-hide="item.owner != user">
-        <div class="row">
-            <div class="col-xs-6 col-md-3">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-6 col-lg-6">
                 <div class="thumbnail">
-                    <div class="caption">
+                    <div class="caption inline">
                         <h3>{{::item.company}}</h3>
                         <p>Owner: {{::item.owner}}</p>
                         <p>Price: {{::item.price}}</p>
                         <p>
                             <td><a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="getDetail(item.id)" class="btn btn-default">Detail</a>
-                                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter(item, user)" class="btn btn-default" ng-disabled="item.paid == true">Pay</a></td>
+                                <a href="#{{::getDetailUrl({ stuff: item })}}" ng-click="saveRenter(item, user)" class="btn btn-default" ng-hide="item.paid == true">Pay</a></td>
                         </p>
                     </div>
                 </div>

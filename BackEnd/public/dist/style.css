@@ -6737,6 +6737,46 @@ button.close {
 .center {
   margin: auto;
 }
+.capa-imagen > img {
+  background-image: url("url");
+  position: relative;
+}
+.imgBar > img:hover {
+  width: 90%;
+  height: 80%;
+  /*.mobile-only{
+      width: 150px;
+      height: 150px;
+    }*/
+}
+.thumbnail {
+  margin: 30px;
+  background-color: #ffffff;
+  border: 1px solid black;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  display: block;
+  margin-left: 3px;
+}
+@media (min-width: 992px) {
+  .desktop-only {
+    display: block;
+  }
+}
+@media (max-width: 700px) {
+  .mobile-only {
+    display: inline-block;
+  }
+  .desktop-only {
+    display: none;
+  }
+}
+div.thumbmail {
+  float: left;
+}
+.body {
+  font-family: Georgia;
+}
 body {
   background: url('http://i.imgur.com/Au8To6H.jpg') fixed;
   background-size: cover;
@@ -6883,8 +6923,8 @@ form.login a:hover {
   left: 45%;
 }
 /*.row {
-	display: inline;
+  display: inline;
 }*/
 /*.body{
-	background-color: lightgray;
+  background-color: lightgray;
 }*/
