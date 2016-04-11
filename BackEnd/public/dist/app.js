@@ -38652,11 +38652,6 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                 }
             );
 
-        $scope.redir = function() {
-            $window.location.href = "#/bills/image";
-
-        }
-
         // Scope method
         $scope.trustSrc = function(src) {
             return $sce.trustAsResourceUrl(src);
@@ -38706,8 +38701,8 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
     }
 ]);
 
-;angular.module('babelrenting').controller('MoviesListController', ['$scope', '$log', '$filter', 'APIClient', 'URL', 'paths',
-        function($scope, $log, $filter, APIClient, URL, paths) {
+;angular.module('babelrenting').controller('MoviesListController', ['$scope', '$window', '$log', '$filter', 'APIClient', 'URL', 'paths',
+        function($scope, $window, $log, $filter, APIClient, URL, paths) {
 
             // Scope model init
             $scope.model = [];
@@ -38757,8 +38752,16 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                 movie.paid = true;
                 console.log("El name es", name);
                 console.log("EL ID DE LA MOVIE EN SAVERENTER ES", movie._id);
-                APIClient.rentMovie(movie, name);
-                APIClient.getMovies();
+                APIClient.rentMovie(movie, name).then(
+                    function(data){
+                        console.log("EL data dentro de save Renter es",data);
+                        $window.location.href = "#/bills/" + movie._id;
+                    },
+                    function(err){
+                        console.log("Error");
+                    }
+                );
+                //APIClient.getMovie(movie._id);
             };
 
             // Controller start
@@ -38985,19 +38988,17 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                     console.log("PETICIÓN PUT1 COMPLETADA");
                     console.log("EL OBJETO DESPUÉS DEL PUT1 CONTIENE", movie);
                     console.log("EL ID DE LA MOVIE TRAS EL PUT1 ES", movie._id);
-                    $http.put('/api/v1/factura/' + movie._id, movie);
-                    // promise resolve
-                    console.log("PETICIÓN PUT2 COMPLETADA, PROCEDEMOS A REALIZAR EL GET DE LA MISMA PARA QUE TENGAMOS LOS DATOS ACTUALZIADOS");
-                    console.log("En este momento el movie._id es", movie._id);
-                    ///Aquí se cuelga ........
-                    $http.get('/api/v1/factura/' + movie._id).then(
+                    $http.put('/api/v1/factura/' + movie._id, movie).then(
                         function(response) {
-                            console.log("Estoy en la promesa del get tras realizar el PUT");
+                            // promise resolve
+                            console.log("PETICIÓN PUT2 COMPLETADA, PROCEDEMOS A REALIZAR EL GET DE LA MISMA PARA QUE TENGAMOS LOS DATOS ACTUALZIADOS");
+                            console.log("En este momento el movie._id es", movie._id);
+                            ///Aquí se cuelga ........
                             deferred.resolve(response.data);
+
                         },
 
                         function(response) {
-                            // promise reject
                             deferred.reject(response.data);
                         }
                     );

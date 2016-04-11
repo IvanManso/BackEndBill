@@ -1,5 +1,5 @@
-angular.module('babelrenting').controller('MoviesListController', ['$scope', '$log', '$filter', 'APIClient', 'URL', 'paths',
-        function($scope, $log, $filter, APIClient, URL, paths) {
+angular.module('babelrenting').controller('MoviesListController', ['$scope', '$window', '$log', '$filter', 'APIClient', 'URL', 'paths',
+        function($scope, $window, $log, $filter, APIClient, URL, paths) {
 
             // Scope model init
             $scope.model = [];
@@ -49,8 +49,16 @@ angular.module('babelrenting').controller('MoviesListController', ['$scope', '$l
                 movie.paid = true;
                 console.log("El name es", name);
                 console.log("EL ID DE LA MOVIE EN SAVERENTER ES", movie._id);
-                APIClient.rentMovie(movie, name);
-                APIClient.getMovies();
+                APIClient.rentMovie(movie, name).then(
+                    function(data){
+                        console.log("EL data dentro de save Renter es",data);
+                        $window.location.href = "#/bills/" + movie._id;
+                    },
+                    function(err){
+                        console.log("Error");
+                    }
+                );
+                //APIClient.getMovie(movie._id);
             };
 
             // Controller start

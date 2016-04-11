@@ -25,11 +25,6 @@ angular.module('babelrenting').controller('MovieDetailController', ['$scope', '$
                 }
             );
 
-        $scope.redir = function() {
-            $window.location.href = "#/bills/image";
-
-        }
-
         // Scope method
         $scope.trustSrc = function(src) {
             return $sce.trustAsResourceUrl(src);

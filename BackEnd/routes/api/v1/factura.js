@@ -57,121 +57,127 @@ router.get('/:id', function(req, res) {
 });
 
 router.put('/:id', function(req, res) {
-    //var bill = new Factura(req.body);
-    Factura.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, data) {
-        if (err){
-            return res.json ({result: false, err: err});
-        }
-        else {
-            return res.json({ result: true, rows:data });
-        }
-    });
-    });
+            //var bill = new Factura(req.body);
+            Factura.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, data) {
+                    if (err) {
+                        return res.json({ result: false, err: err });
+                    } else {
+                        Factura.find({ _id: req.params.id }, function(err, data) {
+                                if (err) {
+                                    return res.json({ result: false, err: err });
+                                } else {
+                                    console.log("EL DATA ACTUALIZADO ES", data);
+                                    return res.json({ result: true, rows: data });
+                                }
+                            });
+                        }
+                    });
+            });
 
 
-/*router.put('/:id', function(req, res) {
-    console.log("El id en el PUT ES", req.params.id);
-    var queryName = Factura.find({ _id: req.params.id });
-    queryName.exec(function(err, rows) {
-        if (err) {
-            console.log("Error al realizar el get de una factura en concreto");
-            return res.json({ result: false, err: err });
-        } else {
-            console.log("Get de una película en concreto completado con las siguientes filas", rows);
-            return res.json({ result: true, rows: rows });
-        }
-    });
-});*/
+        /*router.put('/:id', function(req, res) {
+            console.log("El id en el PUT ES", req.params.id);
+            var queryName = Factura.find({ _id: req.params.id });
+            queryName.exec(function(err, rows) {
+                if (err) {
+                    console.log("Error al realizar el get de una factura en concreto");
+                    return res.json({ result: false, err: err });
+                } else {
+                    console.log("Get de una película en concreto completado con las siguientes filas", rows);
+                    return res.json({ result: true, rows: rows });
+                }
+            });
+        });*/
 
-router.get('/', function(req, res) {
-    var owner = req.query.owner || "";
-    var company = req.query.company || "";
-    var paid = req.query.paid || "";
-    var price = req.query.price || "";
-    var foto = req.query.foto || "";
-    var sort = req.query.sort || "nombre";
-    var limit = req.query.limit || "";
-    var start = req.query.start || "";
-    var filter = {};
-    var priceSplit = price.split("-");
-    patternMenor = /-\d/;
-    patternMayor = /\d-/;
-    patternBetween = /\d-\d/;
-    patternDigito = /\d/;
-    if (owner !== "") {
-        filter.owner = new RegExp('^' + owner, "i");
-    }
-    if (company !== "") {
-        filter.company = new RegExp('^' + company, "i");
-    }
-    if (paid !== "") {
-        filter.paid = paid;
-    }
-    if (limit !== "") {
-        limit = parseInt(limit);
-    }
-    if (start !== "") {
-        start = parseInt(start);
-    }
-    if (price !== "") {
-        if (patternBetween.test(price)) {
-            filter.price = { '$gte': priceSplit[0], '$lte': priceSplit[1] };
-        } else if (patternMayor.test(price)) {
-            filter.price = { '$gte': priceSplit[0] };
-        } else if (patternMenor.test(price)) {
-            filter.price = { '$lte': priceSplit[1] };
-        } else if (patternDigito.test(price)) {
-            filter.price = priceSplit[0];
-        }
-    }
-
-
-    Factura.list(filter.data, sort, limit, start, function(err, rows) {
-        if (err) {
-            console.log("Error en el get de facturas");
-            return res.json({ result: false, err: err });
-        } else {
-            console.log("Get de facturas completado");
-            return res.json({ result: true, rows: rows });
-        }
-    });
-
-});
+        router.get('/', function(req, res) {
+            var owner = req.query.owner || "";
+            var company = req.query.company || "";
+            var paid = req.query.paid || "";
+            var price = req.query.price || "";
+            var foto = req.query.foto || "";
+            var sort = req.query.sort || "nombre";
+            var limit = req.query.limit || "";
+            var start = req.query.start || "";
+            var filter = {};
+            var priceSplit = price.split("-");
+            patternMenor = /-\d/;
+            patternMayor = /\d-/;
+            patternBetween = /\d-\d/;
+            patternDigito = /\d/;
+            if (owner !== "") {
+                filter.owner = new RegExp('^' + owner, "i");
+            }
+            if (company !== "") {
+                filter.company = new RegExp('^' + company, "i");
+            }
+            if (paid !== "") {
+                filter.paid = paid;
+            }
+            if (limit !== "") {
+                limit = parseInt(limit);
+            }
+            if (start !== "") {
+                start = parseInt(start);
+            }
+            if (price !== "") {
+                if (patternBetween.test(price)) {
+                    filter.price = { '$gte': priceSplit[0], '$lte': priceSplit[1] };
+                } else if (patternMayor.test(price)) {
+                    filter.price = { '$gte': priceSplit[0] };
+                } else if (patternMenor.test(price)) {
+                    filter.price = { '$lte': priceSplit[1] };
+                } else if (patternDigito.test(price)) {
+                    filter.price = priceSplit[0];
+                }
+            }
 
 
+            Factura.list(filter.data, sort, limit, start, function(err, rows) {
+                if (err) {
+                    console.log("Error en el get de facturas");
+                    return res.json({ result: false, err: err });
+                } else {
+                    console.log("Get de facturas completado");
+                    return res.json({ result: true, rows: rows });
+                }
+            });
 
-/**
- * Ruta establecida a partir de la cual podremos ver la lista de anuncios
- */
+        });
 
-router.post("/", function(req, res) {
-    //validarFact(req, res);
-    //});
 
-    //function validarFact(req, res) {
-    console.log("Estoy en validarFact dentro del post en factura.js");
-    var factura = new Factura(req.body);
-    //var owner = req.body.owner;
-    var detail = req.body.detail;
-    var price = req.body.price;
-    //var date = req.body.date;
-    //var payment_date = req.body.payment_date;
-    var company = req.body.company;
-    var paid = req.body.paid;
-    if (detail === "" || price === "" || company === "" || paid === "") {
-        return console.error("Campos vacíos");
-    } else {
-        factura.save(function(err, saved) {
-            if (err) {
-                return res.json({ result: false, err: err });
+
+        /**
+         * Ruta establecida a partir de la cual podremos ver la lista de anuncios
+         */
+
+        router.post("/", function(req, res) {
+            //validarFact(req, res);
+            //});
+
+            //function validarFact(req, res) {
+            console.log("Estoy en validarFact dentro del post en factura.js");
+            var factura = new Factura(req.body);
+            //var owner = req.body.owner;
+            var detail = req.body.detail;
+            var price = req.body.price;
+            //var date = req.body.date;
+            //var payment_date = req.body.payment_date;
+            var company = req.body.company;
+            var paid = req.body.paid;
+            if (detail === "" || price === "" || company === "" || paid === "") {
+                return console.error("Campos vacíos");
             } else {
-                console.log("Registro completado");
-                return res.json({ result: true, row: saved });
+                factura.save(function(err, saved) {
+                    if (err) {
+                        return res.json({ result: false, err: err });
+                    } else {
+                        console.log("Registro completado");
+                        return res.json({ result: true, row: saved });
+                    }
+                });
             }
         });
-    }
-});
-//}
+        //}
 
 
-module.exports = router;
+        module.exports = router;
