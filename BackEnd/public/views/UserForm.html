@@ -4,7 +4,7 @@
     <div class="alert alert-danger" ng-show="errorMessage">
         {{errorMessage}}
     </div>
-    <form name="movieForm" novalidate class="form-horizontal" ng-submit="saveUser()">
+    <form name="movieForm" novalidate class="form-horizontal animated zoomIn" ng-submit="saveUser()">
         <div class="form-group" ng-class="{ 'has-success': movieForm.name.$valid, 'has-error': movieForm.name.$invalid && movieForm.name.$dirty }">
             <label for="name" class="col-sm-2 control-label"><div style="color:white;">Name</div></label>
             <div class="col-sm-10">

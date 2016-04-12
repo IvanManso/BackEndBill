@@ -38526,9 +38526,6 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
     controller.titles[paths.url.movieNew] = paths.titles.billNew;
     controller.titles[paths.url.newUser] = paths.titles.newUser;
     controller.titles[paths.url.movieDetail] = paths.titles.movieDetail;
-    controller.titles[paths.url.movieImage] = paths.titles.movieImage;
-
-
 
     //Scope init
     $scope.model = {
@@ -38568,6 +38565,7 @@ angular.module('babelrenting', ['ngRoute', 'ngSanitize', 'URL']).config(
                     },
                     // Movie not found
                     function(error) {
+                        /*$window.alert( "Your username or password is incorrect. Please check your credentials and try again.");*/
                         // TODO: improve error management
                         $location.url(paths.notFound);
                     }

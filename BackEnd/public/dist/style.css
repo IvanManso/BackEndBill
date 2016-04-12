@@ -6742,7 +6742,7 @@ button.close {
   position: relative;
 }
 .imgBar > img:hover {
-  width: 90%;
+  width: 99%;
   height: 80%;
   /*.mobile-only{
       width: 150px;

@@ -3,14 +3,13 @@
         <div class="col-md-12">
             <div class="wrap">
                 <p class="form-title">Welcome</p>
-                <form class="login" ng-submit="saveUsername()" name="myForm">
-                    <input type="text" placeholder="Username" class="form-control" ng-model="model.name" for="name" autofocus />
-                    <input type="password" placeholder="Password" class="form-control" ng-model="model.password" for="password" />
+                <form class="login animated zoomIn" ng-submit="saveUsername()" name="myForm">
+                    <input type="text" placeholder="Username" class="form-control" ng-model="model.name" for="name" autofocus required></input>
+                    <input type="password" placeholder="Password" class="form-control" ng-model="model.password" for="password" required></input>
                     <input type="submit" value="Sign In" class="btn btn-default btn-sm" />
                     <input value="Sign Up" class="btn btn-default btn-sm"  ng-click="redir()"/>
                 </form>
             </div>
-
         </div>
     </div>
 </div>

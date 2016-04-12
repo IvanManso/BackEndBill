@@ -4,7 +4,7 @@
             <input type="search" ng-model="query.company" placeholder="Search..." class="form-control" width="30%">
         </tr>
     </table>
-    <div class="onBoard" ng-repeat="item in model | filter:query" ng-hide="item.owner != user">
+    <div class="onBoard animated fadeIn" ng-repeat="item in model | filter:query" ng-hide="item.owner != user">
         <div class="row-fluid">
             <div class="col-xs-12 col-sm-6 col-lg-6">
                 <div class="thumbnail">

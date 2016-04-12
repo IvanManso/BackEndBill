@@ -20,9 +20,9 @@ router.post("/", function(req, res) {
         var queryName = User.find({ name: filter.name });
         queryName.exec(function(err, rows) {
             if (err) {
-                return console.error("error al logear");
+                return console.log("error al logear");
             } else if (rows.length === 0) {
-                return console.error("El nombre de usuario no existe");
+                return console.log("El nombre de usuario no existe");
             } else {
                 console.log("La pw antes del hash es", user.password);
                 user.password = passwordHash(user["password"]);
@@ -32,9 +32,9 @@ router.post("/", function(req, res) {
                 var queryPassword = User.find({ password: filter.password });
                 queryPassword.exec(function(err, rows) {
                     if (err) {
-                        return console.error("error al logear");
+                        return console.log("error al logear");
                     } else if (rows.length === 0) {
-                        return console.error("La contraseña para el dicho usuario no existe");
+                        return console.log("La contraseña para el dicho usuario no existe");
                     } else {
 
                                 console.log("Login completado");

@@ -18,6 +18,7 @@ angular.module('babelrenting').controller('LoginController', ["APIClient", "$sco
                     },
                     // Movie not found
                     function(error) {
+                        /*$window.alert( "Your username or password is incorrect. Please check your credentials and try again.");*/
                         // TODO: improve error management
                         $location.url(paths.notFound);
                     }
